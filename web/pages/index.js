@@ -49,7 +49,7 @@ export default function Home() {
         </Flex>
       </Box>
 
-      <Box pos="absolute" bottom="0" left="0" right="0">
+      <Box pos="absolute" bottom="0" left="0" right="0" overflow="hidden">
         <Sketch />
       </Box>
 

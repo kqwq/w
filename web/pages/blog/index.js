@@ -5,6 +5,7 @@ const BlogHome = () => {
   return (
     <>
       <NavBar />
+      <div>No blog posts! Come back later.</div>
     </>
   );
 };
