@@ -70,7 +70,7 @@ export default function Home() {
         </NextLink>
 
         <NextLink href={"/secret"} passHref>
-          <Link>Yeah</Link>
+          <Link>???</Link>
         </NextLink>
       </Flex>
     </>

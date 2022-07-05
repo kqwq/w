@@ -14,9 +14,11 @@
     "@emotion/styled": "^11",
     "@fontsource/roboto": "^4.5.7",
     "framer-motion": "^6",
+    "mongoose": "^6.4.3",
     "next": "12.1.6",
     "react": "18.1.0",
     "react-dom": "18.1.0",
+    "react-markdown": "^8.0.3",
     "react-p5-wrapper": "^3.3.0"
   },
   "devDependencies": {
