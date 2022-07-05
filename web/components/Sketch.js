@@ -10,17 +10,20 @@ const ReactP5Wrapper = dynamic(
 
 function sketch(p5) {
   p5.setup = () => {
-    p5.createCanvas(window.innerWidth, 200, p5.P2D);
+    p5.createCanvas(window.innerWidth, 300, p5.P2D);
     p5.noStroke();
     p5.angleMode(p5.DEGREES);
 
     p5.background(0, 0);
 
-    let y = 201;
-    for (let x = 0; x < p5.width - 100; x++) {
-      x += 100;
+    for (let i = 0; i < 200; i++) {
+      p5.push();
+      p5.scale(0.2 + i / 300);
+      let x = Math.random() * p5.width;
+      let y = i + 200;
       let rand = ~~(Math.random() * trees.length);
       trees[rand](x, y);
+      p5.pop();
     }
 
     // ground
@@ -68,7 +71,7 @@ function sketch(p5) {
   };
 
   // tree 1
-  var tree1 = function (x, y) {
+  var tree1 = function (x, y, s) {
     p5.push();
     p5.translate(x - 35, y - 300);
     bark(39, 247, 7, 31, 30);

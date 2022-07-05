@@ -1,29 +1,38 @@
-import { Box, Center, Flex, Spacer, Text, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Center,
+  Flex,
+  Link,
+  Spacer,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import Head from "next/head";
 import Image from "next/image";
+import NavBar from "../components/NavBar";
 import { Sketch } from "../components/Sketch";
-import styles from "../styles/Home.module.css";
+import NextLink from "next/link";
 
 export default function Home() {
   return (
     <>
+      <NavBar />
       <Box
         w="100%"
         h="100vh"
         style={{
           backgroundColor: "white",
-          background: `linear-gradient(
-            45deg,
-            hsl(0deg 0% 100%) 0%,
-            hsl(25deg 100% 95%) 11%,
-            hsl(25deg 100% 90%) 22%,
-            hsl(25deg 100% 85%) 33%,
-            hsl(25deg 100% 80%) 44%,
-            hsl(24deg 100% 76%) 56%,
-            hsl(24deg 100% 71%) 67%,
-            hsl(25deg 96% 65%) 78%,
-            hsl(26deg 92% 59%) 89%,
-            hsl(27deg 88% 52%) 100%
+          background: `llinear-gradient(
+            95deg,
+            hsl(0deg 0% 0%) 0%,
+            hsl(144deg 1% 46%) 9%,
+            hsl(144deg 45% 98%) 12%,
+            hsl(259deg 97% 77%) 15%,
+            hsl(241deg 98% 50%) 17%,
+            hsl(264deg 72% 69%) 21%,
+            hsl(0deg 21% 85%) 28%,
+            hsl(0deg 3% 40%) 42%,
+            hsl(0deg 0% 0%) 99%
           )`,
         }}
       >
@@ -32,15 +41,38 @@ export default function Home() {
           justifyContent="center"
           w="100%"
           h="100vh"
-          color="darkgreen"
+          color="brown"
         >
-          <Text fontSize="72px">Kyle Lastname</Text>
+          <Text color="black" fontSize="72px">
+            Kyle .
+          </Text>
         </Flex>
       </Box>
 
       <Box pos="absolute" bottom="0" left="0" right="0">
         <Sketch />
       </Box>
+
+      <Flex
+        pos="absolute"
+        top="60vh"
+        width="100%"
+        justifyContent="space-around"
+        color="blue"
+        fontSize="2xl"
+      >
+        <NextLink href={"/blog"} passHref>
+          <Link>Blog</Link>
+        </NextLink>
+
+        <NextLink href={"/projects"} passHref>
+          <Link>Projects</Link>
+        </NextLink>
+
+        <NextLink href={"/secret"} passHref>
+          <Link>Yeah</Link>
+        </NextLink>
+      </Flex>
     </>
   );
 }
