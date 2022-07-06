@@ -13,8 +13,10 @@ const blogSchema = new mongoose.Schema({
     votes: Number,
     views: Number,
     comments: Number,
+    positiveComments: Number,
+    negativeComments: Number,
   },
 });
 
-module.exports =
-  mongoose.models.BlogPost || mongoose.model("BlogPost", blogSchema);
+export default mongoose.models.BlogPost ||
+  mongoose.model("BlogPost", blogSchema);

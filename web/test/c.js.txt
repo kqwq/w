@@ -1,0 +1,70 @@
+// api/users.js
+
+import dbConnect from "../lib/dbConnect.js";
+import Comment from "../models/Comment.js";
+import BlogPost from "../models/BlogPost.js";
+// import getIp from "../lib/getIp";
+// import { validateAdminPassword } from "../lib/adminPassword";
+import Sentiment from "sentiment";
+
+let sentiment = new Sentiment();
+
+const main = async () => {
+  await dbConnect();
+
+  // Reset all blog post comments to zero
+  await BlogPost.updateMany(
+    {},
+    {
+      $set: {
+        "meta.comments": 0,
+        "meta.positiveComments": 0,
+        "meta.negativeComments": 0,
+      },
+    }
+  );
+  console.log("reset all posts comments to zero");
+
+  const comments = await Comment.find({}).sort("-date").limit(999);
+  for (let json of comments) {
+    console.log(json);
+    if (json.postId === "thots_contact") continue;
+    let result = sentiment.analyze(json.body);
+    json.meta = {
+      sentimentScore: result.score,
+      sentimentComparitive: result.comparative,
+    };
+
+    const posInc = result.score >= 0 ? 1 : 0;
+    const negInc = result.score < 0 ? 1 : 0;
+
+    try {
+      await BlogPost.findOneAndUpdate(
+        { _id: json.postId },
+        {
+          $inc: {
+            "meta.comments": 1,
+            "meta.positiveComments": posInc,
+            "meta.negativeComments": negInc,
+          },
+        }
+      );
+    } catch (e) {
+      console.error(e);
+    }
+
+    await Comment.updateOne(
+      { _id: json._id },
+      {
+        $set: {
+          "meta.sentimentScore": json.meta.sentimentScore,
+          "meta.sentimentComparitive": json.meta.sentimentComparitive,
+        },
+      }
+    );
+  }
+  console.log("done");
+  console.log("done2");
+};
+
+await main();

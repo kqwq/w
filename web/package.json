@@ -21,7 +21,8 @@
     "react-dom": "18.1.0",
     "react-icons": "^4.4.0",
     "react-markdown": "^8.0.3",
-    "react-p5-wrapper": "^3.3.0"
+    "react-p5-wrapper": "^3.3.0",
+    "sentiment": "^5.0.2"
   },
   "devDependencies": {
     "eslint": "8.15.0",

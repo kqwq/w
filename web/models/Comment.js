@@ -8,7 +8,11 @@ const commentSchema = new mongoose.Schema({
   author: String,
   ip: String, // Gets added in comment.js "middleware" - can be safely ignored
   postId: String,
+  meta: {
+    sentimentScore: Number,
+    sentimentComparitive: Number,
+  },
 });
 
-module.exports =
-  mongoose.models.Comment || mongoose.model("Comment", commentSchema);
+export default mongoose.models.Comment ||
+  mongoose.model("Comment", commentSchema);

@@ -153,9 +153,9 @@ const ThotsPage = () => {
                     <>
                       <Icon as={IoHeart} boxSize={5} />
                       <Box as="span" fontSize="14px">
-                        <Text as="span">3</Text>
+                        <Text as="span">{post.meta.positiveComments}</Text>
                         {" - "}
-                        <Text as="span">1</Text>
+                        <Text as="span">{post.meta.negativeComments}</Text>
                       </Box>
                       <Icon as={IoHeartDislikeOutline} boxSize={5} />
                     </>
