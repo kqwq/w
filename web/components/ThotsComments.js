@@ -58,52 +58,65 @@ const Comments = ({ isOpen, onOpen, onClose, postId, postBody }) => {
       console.error("error", newComment);
       alert("There was a problem posting that comment... Error code 1002");
     } else {
-      // setComments([...comments, newComment]);
-      alert("success");
+      let commentCollection = [...comments, newComment];
+      commentCollection.sort(sortActions[sortName]);
+      setComments(commentCollection);
+      commentBodyRef.current.value = "";
+      commentAuthorRef.current.value = "";
     }
   };
   const commentBodyRef = React.useRef();
   const commentAuthorRef = React.useRef();
   const [loaded, setLoaded] = React.useState(false);
   const [comments, setComments] = React.useState([]);
-  const [sortedBy, setSortedBy] = React.useState("old");
+
+  let sortActions = {
+    old: (a, b) => new Date(a.date) - new Date(b.date),
+    new: (a, b) => new Date(b.date) - new Date(a.date),
+    sentiment: (a, b) =>
+      (b?.meta?.sentimentComparative || 0) - a?.meta?.sentimentComparative,
+  };
+  const [sortName, setSortName] = React.useState("old");
 
   const onTabChange = (index) => {
-    let sortActions = {
-      new: (a, b) => new Date(b.date) - new Date(a.date),
-      old: (a, b) => new Date(a.date) - new Date(b.date),
-      sentiment: (a, b) =>
-        b.meta.sentimentComparative - a.meta.sentimentComparative,
-    };
     let indexToAction = ["old", "new", "sentiment"];
     let sortBy = indexToAction[index];
-    setSortedBy(sortBy);
-    let thisSortAction = sortActions[sortBy];
+    setSortName(sortBy);
+  };
 
-    console.log(comments);
-
-    setComments((c) => [...c].sort(thisSortAction));
+  const loadComments = async (postId) => {
+    if (!postId) return;
+    setLoaded(false);
+    let res = await fetch(`./api/comment/${postId}`);
+    if (!res.ok) {
+      return alert("Error fetching comments");
+    }
+    let json = await res.json();
+    let comments = json.data;
+    comments.sort(sortActions[sortName]);
+    setComments(json.data);
+    setLoaded(true);
   };
 
   useEffect(() => {
     // When postId changes, fetch new comments
-    (async () => {
-      if (!postId) return;
-      setLoaded(false);
-      let res = await fetch(`./api/comment/${postId}`);
-      if (!res.ok) {
-        return alert("Error fetching comments");
-      }
-      let json = await res.json();
-      setComments(json.data);
-      setLoaded(true);
-    })();
+    loadComments(postId);
   }, [postId]);
+
+  useEffect(() => {
+    setComments((c) => [...c].sort(sortActions[sortName]));
+  }, [sortName]);
 
   const colormap = useMemo(() =>
     interpolate(["red", "rgb(230,230,230)", "lime"])
   );
   const formatSentiment = (sentiment) => {
+    if (sentiment === null || sentiment === undefined)
+      return (
+        <Box as="a" cursor="pointer" onClick={() => loadComments(postId)}>
+          Calculate now
+        </Box>
+      );
     return sentiment === 0
       ? "Neutral"
       : Math.abs(sentiment).toFixed(2) * 100 +
@@ -134,7 +147,12 @@ const Comments = ({ isOpen, onOpen, onClose, postId, postBody }) => {
                 : postBody}
               "
             </Text>
-            <Tabs mb={2} isFitted onChange={onTabChange}>
+            <Tabs
+              mb={2}
+              isFitted
+              onChange={onTabChange}
+              defaultIndex={Object.keys(sortActions).indexOf(sortName)}
+            >
               <TabList>
                 <Tab>Oldest</Tab>
                 <Tab>Newest</Tab>
@@ -150,14 +168,14 @@ const Comments = ({ isOpen, onOpen, onClose, postId, postBody }) => {
                   mb={2}
                   fontSize="14px"
                   bgColor={
-                    sortedBy !== "sentiment"
+                    sortName !== "sentiment"
                       ? "#FFC300"
-                      : colormap((c.meta.sentimentComparative + 1) / 2)
+                      : colormap(((c?.meta?.sentimentComparative || 0) + 1) / 2)
                   }
                   borderRadius="6px"
                   p={2}
                 >
-                  {sortedBy === "sentiment" && (
+                  {sortName === "sentiment" && (
                     <Text
                       float="right"
                       fontSize="xs"
@@ -166,7 +184,7 @@ const Comments = ({ isOpen, onOpen, onClose, postId, postBody }) => {
                       textDecorationLine="underline"
                       p={0.5}
                     >
-                      {formatSentiment(c.meta.sentimentComparative)}
+                      {formatSentiment(c?.meta?.sentimentComparative)}
                     </Text>
                   )}
                   <Text>{c.body}</Text>
