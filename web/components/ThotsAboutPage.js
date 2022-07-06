@@ -101,6 +101,7 @@ const ThotsAboutPage = () => {
               <Input placeholder="name" ref={contactNameRef}></Input>
               <Select ref={contactTypeRef}>
                 <option>General</option>
+                <option>Delete a comment</option>
                 <option>Report spam/malicious activity</option>
               </Select>
               <Button

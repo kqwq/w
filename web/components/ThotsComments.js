@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import {
   Box,
   Container,
@@ -22,8 +22,14 @@ import {
   Textarea,
   VStack,
   Spinner,
+  Tabs,
+  TabList,
+  TabPanels,
+  TabPanel,
+  Tab,
 } from "@chakra-ui/react";
 import moment from "moment";
+import interpolate from "color-interpolate";
 
 const Comments = ({ isOpen, onOpen, onClose, postId, postBody }) => {
   const btnRef = React.useRef();
@@ -61,6 +67,21 @@ const Comments = ({ isOpen, onOpen, onClose, postId, postBody }) => {
   const [loaded, setLoaded] = React.useState(false);
   const [comments, setComments] = React.useState([]);
 
+  const onTabChange = (index) => {
+    let sortActions = {
+      new: (a, b) => new Date(a.date) - new Date(b.date),
+      old: (a, b) => new Date(b.date) - new Date(a.date),
+      sentiment: (a, b) =>
+        a.meta.sentimentComparative - b.meta.sentimentComparative,
+    };
+    let indexToAction = ["new", "old", "sentiment"];
+    let thisSortAction = sortActions[indexToAction[index]];
+
+    console.log(comments);
+
+    setComments((c) => [...c].sort(thisSortAction));
+  };
+
   useEffect(() => {
     // When postId changes, fetch new comments
     (async () => {
@@ -76,6 +97,12 @@ const Comments = ({ isOpen, onOpen, onClose, postId, postBody }) => {
     })();
   }, [postId]);
 
+  const colormap = useMemo(() =>
+    interpolate(["red", "rgb(230,230,230)", "lime"])
+  );
+
+  const displayMaxChars = 66;
+
   return (
     <>
       <Drawer
@@ -87,10 +114,23 @@ const Comments = ({ isOpen, onOpen, onClose, postId, postBody }) => {
         <DrawerOverlay />
         <DrawerContent bgColor="white">
           <DrawerCloseButton />
-          <DrawerHeader>Comments</DrawerHeader>
+          <DrawerHeader pb={0}>Comments</DrawerHeader>
 
           <DrawerBody>
-            <Text mb={3}>"{postBody.slice(0, 100)}..."</Text>
+            <Text mb={3}>
+              "
+              {postBody.length > displayMaxChars
+                ? postBody.slice(0, displayMaxChars - 3) + "..."
+                : postBody}
+              "
+            </Text>
+            <Tabs isFitted onChange={onTabChange}>
+              <TabList>
+                <Tab>Newest</Tab>
+                <Tab>Oldest</Tab>
+                <Tab>Sentiment</Tab>
+              </TabList>
+            </Tabs>
 
             {loaded ? (
               comments.map((c) => (
@@ -99,7 +139,11 @@ const Comments = ({ isOpen, onOpen, onClose, postId, postBody }) => {
                   border="invisible 2px black"
                   mb={2}
                   fontSize="14px"
-                  bgColor="orange"
+                  bgColor={
+                    c.meta.sentimentComparative === 0
+                      ? "orange"
+                      : colormap((c.meta.sentimentComparative + 1) / 2)
+                  }
                   borderRadius="6px"
                   p={2}
                 >

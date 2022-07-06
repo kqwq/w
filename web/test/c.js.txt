@@ -32,7 +32,7 @@ const main = async () => {
     let result = sentiment.analyze(json.body);
     json.meta = {
       sentimentScore: result.score,
-      sentimentComparitive: result.comparative,
+      sentimentComparative: result.comparative,
     };
 
     const posInc = result.score >= 0 ? 1 : 0;
@@ -58,7 +58,7 @@ const main = async () => {
       {
         $set: {
           "meta.sentimentScore": json.meta.sentimentScore,
-          "meta.sentimentComparitive": json.meta.sentimentComparitive,
+          "meta.sentimentComparative": json.meta.sentimentComparative,
         },
       }
     );

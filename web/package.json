@@ -13,6 +13,7 @@
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
     "@fontsource/roboto": "^4.5.7",
+    "color-interpolate": "^1.0.5",
     "framer-motion": "^6",
     "moment": "^2.29.3",
     "mongoose": "^6.4.3",

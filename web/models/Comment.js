@@ -10,7 +10,7 @@ const commentSchema = new mongoose.Schema({
   postId: String,
   meta: {
     sentimentScore: Number,
-    sentimentComparitive: Number,
+    sentimentComparative: Number,
   },
 });
 
