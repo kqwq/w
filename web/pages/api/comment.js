@@ -16,7 +16,7 @@ export default async function handler(req, res) {
   switch (method) {
     case "GET":
       try {
-        if (1 || validateAdminPassword(req)) {
+        if (validateAdminPassword(req)) {
           const comments = await Comment.find({}).sort("-date").limit(20);
           res.status(200).json({ success: true, data: comments });
         } else {
