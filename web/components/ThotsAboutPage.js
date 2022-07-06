@@ -90,9 +90,8 @@ const ThotsAboutPage = () => {
           yeah RIP me. I then got banned from Khan Academy for creating a dating
           app and banned from Discord for writing code that allowed people to
           hack Khan Academy. Because of this, I decided to go to college so I
-          could be assigned a new IP address to finally log on to Khan Academy
-          like a champ. So when people ask me why I decided to go to college, I
-          just say, "It's complicated."
+          could be assigned a new IP address and log on to Khan Academy... my
+          final destiny.
           <Heading fontSize="xl" className="about-header">
             Why the password?
           </Heading>

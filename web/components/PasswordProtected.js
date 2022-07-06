@@ -49,6 +49,8 @@ const PasswordProtected = ({ initOpen, handleUnlock }) => {
       isOpen={isOpen}
       leastDestructiveRef={cancelRef}
       onClose={onClose}
+      closeOnEsc={false}
+      closeOnOverlayClick={false}
     >
       <AlertDialogOverlay>
         <AlertDialogContent>
