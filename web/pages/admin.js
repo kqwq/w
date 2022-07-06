@@ -14,6 +14,8 @@ import {
   FormLabel,
   HStack,
   Spacer,
+  Text,
+  Divider,
 } from "@chakra-ui/react";
 import React, { useRef, useState } from "react";
 import NavBar from "../components/NavBar";
@@ -29,6 +31,7 @@ const AdminPage = () => {
   const tagsRef = useRef();
   const contentPassRef = useRef();
   const adminPassRef = useRef();
+  const [feedback, setFeedback] = useState([]);
 
   const val = (ref) => {
     return ref.current.value;
@@ -67,25 +70,47 @@ const AdminPage = () => {
       .update("kqwq_website_salt_" + val(adminPassRef))
       .digest("hex");
 
-    console.log("hashed: " + hashed);
-
     let res = await fetch("./api/blog_post", {
       method: "POST",
       body: JSON.stringify(blogPost),
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        "X-adminpass": hashed,
+        Authorization: hashed,
       },
     });
 
-    console.log(res);
     alert(res.ok ? "success!" : "error");
     if (!res.ok) return;
 
     clearVal(titleRef);
     clearVal(bodyRef);
     clearVal(tagsRef);
+  };
+
+  const onLoadFeedback = async () => {
+    let hashed = crypto
+      .createHash("sha256")
+      .update("kqwq_website_salt_" + val(adminPassRef))
+      .digest("hex");
+
+    let res = await fetch(
+      "./api/comment/thots_contact",
+
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: hashed,
+        },
+        mode: "cors",
+        cache: "default",
+      }
+    );
+    if (!res.ok) return alert("Error: " + res.statusText);
+    let json = await res.json();
+    setFeedback(json.data);
   };
 
   return (
@@ -157,7 +182,21 @@ const AdminPage = () => {
             <Button w={48} colorScheme="blue" onClick={onSubmitBlogPost}>
               Submit
             </Button>
+            <Button w={96} colorScheme="purple" onClick={onLoadFeedback}>
+              Thots feedback
+            </Button>
           </HStack>
+
+          {feedback.map((f) => {
+            return (
+              <Box>
+                <Text>{f.author}</Text>
+                <Text>{f.body}</Text>
+                <Text>{f.date}</Text>
+                <Divider />
+              </Box>
+            );
+          })}
         </Stack>
 
         <Heading mt={10}>Live stats</Heading>

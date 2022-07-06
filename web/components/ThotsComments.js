@@ -21,7 +21,9 @@ import {
   Input,
   Textarea,
   VStack,
+  Spinner,
 } from "@chakra-ui/react";
+import moment from "moment";
 
 const Comments = ({ isOpen, onOpen, onClose, postId, postBody }) => {
   const btnRef = React.useRef();
@@ -62,12 +64,15 @@ const Comments = ({ isOpen, onOpen, onClose, postId, postBody }) => {
   useEffect(() => {
     // When postId changes, fetch new comments
     (async () => {
+      if (!postId) return;
+      setLoaded(false);
       let res = await fetch(`./api/comment/${postId}`);
       if (!res.ok) {
         return alert("Error fetching comments");
       }
       let json = await res.json();
       setComments(json.data);
+      setLoaded(true);
     })();
   }, [postId]);
 
@@ -85,14 +90,28 @@ const Comments = ({ isOpen, onOpen, onClose, postId, postBody }) => {
           <DrawerHeader>Comments</DrawerHeader>
 
           <DrawerBody>
-            "{postBody.slice(0, 100)}..."
-            {comments.map((c) => (
-              <Box border="dotted 2px pink" mb={4}>
-                <Text>{c.author}</Text>
-                <Text>{c.body}</Text>
-                <Text>{c.date}</Text>
-              </Box>
-            ))}
+            <Text mb={3}>"{postBody.slice(0, 100)}..."</Text>
+
+            {loaded ? (
+              comments.map((c) => (
+                <Box
+                  key={c._id}
+                  border="invisible 2px black"
+                  mb={2}
+                  fontSize="14px"
+                  bgColor="orange"
+                  borderRadius="6px"
+                  p={2}
+                >
+                  <Text>{c.body}</Text>
+                  <Text>
+                    -{c.author} ({moment(c.date).calendar()})
+                  </Text>
+                </Box>
+              ))
+            ) : (
+              <Spinner />
+            )}
           </DrawerBody>
 
           <DrawerFooter>

@@ -1,23 +1,32 @@
 import {
   Box,
+  Button,
+  Code,
   Container,
   Divider,
   Flex,
   Heading,
   HStack,
   Icon,
+  Input,
+  Select,
+  SelectField,
   Spacer,
+  Stack,
   Text,
+  Textarea,
   Tooltip,
   useDisclosure,
+  VStack,
 } from "@chakra-ui/react";
 import ReactMarkdown from "react-markdown";
 
 import React, { useState, useEffect, useRef } from "react";
-import PasswordProtected from "../../components/PasswordProtected";
+import PasswordProtected from "../components/PasswordProtected";
 import moment from "moment";
 import { IoHeart, IoHeartDislikeOutline } from "react-icons/io5";
-import Comments from "../../components/CommentsSidebar";
+import Comments from "../components/ThotsComments";
+import ThotsAboutPage from "../components/ThotsAboutPage";
 
 const ThotsPage = () => {
   const failToFetch = () => {};
@@ -67,6 +76,8 @@ const ThotsPage = () => {
       />
       <Box bgColor="#3c4099" id="bg-box">
         <Box
+          borderRadius="0 0 8px 8px"
+          mb={10}
           ml={4}
           mr={4}
           padding={8}
@@ -164,17 +175,7 @@ const ThotsPage = () => {
 
           {hidden && <Box color="lavender"></Box>}
 
-          {subPage === "about" && (
-            <>
-              <Box color="lavender">
-                <Heading>Welcome!</Heading>
-                <Box>
-                  This is a personal blog where I talk about anything. Heavily
-                  inspired by Matthias's Thoughts blog. 12345.
-                </Box>
-              </Box>
-            </>
-          )}
+          {subPage === "about" && <ThotsAboutPage />}
         </Box>
       </Box>
 

@@ -3,6 +3,7 @@
 import dbConnect from "../../lib/dbConnect";
 import BlogPost from "../../models/BlogPost";
 import crypto from "crypto";
+import { validateAdminPassword } from "../../lib/adminPassword";
 
 export default async function handler(req, res) {
   const { method } = req;
@@ -20,11 +21,7 @@ export default async function handler(req, res) {
       break;
     case "POST":
       try {
-        let attemptAdminPass = Buffer.from(req.headers["x-adminpass"]); // Yes I know this isn't the usual implementation but I want to be more sweet and simple
-        let correctPassword = Buffer.from(process.env.ADMIN_PASSWORD_HASH);
-
-        console.log(attemptAdminPass, correctPassword);
-        if (crypto.timingSafeEqual(attemptAdminPass, correctPassword)) {
+        if (validateAdminPassword(req)) {
           const user = await BlogPost.create(req.body);
           res.status(201).json({ success: true, data: user });
         } else {

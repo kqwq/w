@@ -1,5 +1,6 @@
 // api/comment/[postId]
 
+import { validateAdminPassword } from "../../../lib/adminPassword";
 import dbConnect from "../../../lib/dbConnect";
 import BlogPost from "../../../models/Comment";
 
@@ -11,9 +12,16 @@ export default async function handler(req, res) {
   switch (method) {
     case "GET":
       try {
-        console.log(req.query);
-        const posts = await BlogPost.find({ postId: req.query.postId })
-          .sort("-date")
+        let pid = req.query.postId;
+        if (pid === "thots_contact") {
+          let valid = validateAdminPassword(req);
+          if (!valid) {
+            res.status(403).json({ success: false });
+            return;
+          }
+        }
+        const posts = await BlogPost.find({ postId: pid })
+          .sort("date")
           .limit(100);
         res.status(200).json({ success: true, data: posts });
       } catch (error) {

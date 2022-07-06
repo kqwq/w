@@ -4,6 +4,7 @@ import dbConnect from "../../lib/dbConnect";
 import Comment from "../../models/Comment";
 import BlogPost from "../../models/BlogPost";
 import getIp from "../../lib/getIp";
+import { validateAdminPassword } from "../../lib/adminPassword";
 
 export default async function handler(req, res) {
   const { method } = req;
@@ -13,8 +14,12 @@ export default async function handler(req, res) {
   switch (method) {
     case "GET":
       try {
-        const comments = await Comment.find({}).sort("-date").limit(20);
-        res.status(200).json({ success: true, data: comments });
+        if (validateAdminPassword(req)) {
+          const comments = await Comment.find({}).sort("-date").limit(20);
+          res.status(200).json({ success: true, data: comments });
+        } else {
+          res.status(403).json({ success: false });
+        }
       } catch (error) {
         res.status(400).json({ success: false });
       }
