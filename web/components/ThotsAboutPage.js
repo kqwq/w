@@ -65,13 +65,34 @@ const ThotsAboutPage = () => {
           Hola!
         </Heading>
         <Box>
-          This is a personal blog where I talk about anything. Heavily inspired
-          by Matthias's{" "}
+          This is a personal blog where I talk about anything. It's pretty much
+          a parody of Matthias's{" "}
           <a href="https://thoughts.learnerpages.com/" target="_blank">
             Thoughts
-          </a>
-          . It's like Twitter but without the flow of notifications. I post here
-          a few times daily.
+          </a>{" "}
+          page, but without the{" "}
+          <Box
+            as="span"
+            color="#53929B"
+            bgColor="#2E2A39"
+            fontFamily="Helvetica, Arial, sans-serif"
+          >
+            8:46 p.m. Jun 13, 2022, UTC-10
+          </Box>{" "}
+          ultra-precise timezone-sensitive nonsense. Big inspiration came from
+          Matthias's page and it's totally not like I just copied his page
+          layout and changed the colors.
+          <Spacer mt={3} />
+          Here I will tell you about myself. I am a web, fullstack, mobile, and
+          game developer who works with client-side code, especially JavaScript
+          and Dart. More than half of my smaller projects were deleted after I
+          installed Raspian on a flash drive containing all my old projects. So
+          yeah RIP me. I then got banned from Khan Academy for creating a dating
+          app and banned from Discord for writing code that allowed people to
+          hack Khan Academy. Because of this, I decided to go to college so I
+          could be assigned a new IP address to finally log on to Khan Academy
+          like a champ. So when people ask me why I decided to go to college, I
+          just say, "It's complicated."
           <Heading fontSize="xl" className="about-header">
             Why the password?
           </Heading>

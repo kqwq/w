@@ -201,15 +201,9 @@ const Comments = ({ isOpen, onOpen, onClose, postId, postBody }) => {
 
           <DrawerFooter>
             <VStack>
-              <Textarea
-                ref={commentBodyRef}
-                placeholder="My comment"
-              ></Textarea>
+              <Textarea ref={commentBodyRef} placeholder="comment"></Textarea>
               <HStack spacing={2}>
-                <Input
-                  ref={commentAuthorRef}
-                  placeholder="My name or alias..."
-                />
+                <Input ref={commentAuthorRef} placeholder="name or alias..." />
                 <Button colorScheme="blue" onClick={postComment}>
                   Send
                 </Button>
