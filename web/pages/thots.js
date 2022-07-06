@@ -11,6 +11,7 @@ import {
   Input,
   Select,
   SelectField,
+  Skeleton,
   Spacer,
   Stack,
   Text,
@@ -25,12 +26,14 @@ import React, { useState, useEffect, useRef } from "react";
 import PasswordProtected from "../components/PasswordProtected";
 import moment from "moment";
 import { IoHeart, IoHeartDislikeOutline } from "react-icons/io5";
+import { MdOutlineRefresh } from "react-icons/md";
 import Comments from "../components/ThotsComments";
 import ThotsAboutPage from "../components/ThotsAboutPage";
 
 const ThotsPage = () => {
   const failToFetch = () => {};
   const fetchThots = async () => {
+    setPosts([]);
     let res = await fetch("../api/blog_post");
     if (!res.ok) {
       failToFetch();
@@ -40,7 +43,7 @@ const ThotsPage = () => {
     let d = json.data.filter((post) => post.isThot);
     let out = [...d];
     setPosts(out);
-    console.log(json);
+    setLoaded(true);
   };
   const openComments = (id) => {
     setPostId(id);
@@ -59,7 +62,7 @@ const ThotsPage = () => {
     onClose: onCommentsClose,
   } = useDisclosure();
   const [subPage, setSubPage] = useState("thots");
-  const [hidden, setHidden] = useState(true);
+  const [loaded, setLoaded] = useState(false);
 
   let [posts, setPosts] = useState([]);
   const [postId, setPostId] = useState("");
@@ -130,6 +133,18 @@ const ThotsPage = () => {
             >
               About
             </Text>
+            <Box float="right">
+              <Icon
+                boxSize={10}
+                ml={5}
+                as={MdOutlineRefresh}
+                cursor="pointer"
+                onClick={() => {
+                  console.log("hi");
+                  fetchThots();
+                }}
+              />
+            </Box>
           </Heading>
           <Spacer pb={10} />
 
@@ -173,7 +188,16 @@ const ThotsPage = () => {
               </Box>
             ))}
 
-          {hidden && <Box color="lavender"></Box>}
+          {!loaded && (
+            <Stack spacing={6}>
+              <Skeleton height="70px" />
+              <Divider pt={2} mb={10} />
+              <Skeleton height="70px" />
+              <Divider pt={2} mb={10} />
+              <Skeleton height="70px" />
+              <Divider pt={2} mb={10} />
+            </Stack>
+          )}
 
           {subPage === "about" && <ThotsAboutPage />}
         </Box>
