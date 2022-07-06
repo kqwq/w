@@ -83,15 +83,16 @@ const ThotsAboutPage = () => {
           Matthias's page and it's totally not like I just copied his page
           layout and changed the colors.
           <Spacer mt={3} />
-          Here I will tell you about myself. I am a web, fullstack, mobile, and
-          game developer who works with client-side code, especially JavaScript
-          and Dart. More than half of my smaller projects were deleted after I
-          installed Raspian on a flash drive containing all my old projects. So
-          yeah RIP me. I then got banned from Khan Academy for creating a dating
-          app and banned from Discord for writing code that allowed people to
-          hack Khan Academy. Because of this, I decided to go to college so I
-          could be assigned a new IP address and log on to Khan Academy... my
-          final destiny.
+          Here I will tell you about myself as a programmer. I am a web,
+          fullstack, mobile, and game developer who works with client-side code,
+          especially JavaScript and Dart. More than half of my smaller projects
+          were deleted after I installed Raspian on a flash drive containing all
+          my old projects. I then got banned from Khan Academy for creating a
+          functional dating app. This meant I could no longer create and share{" "}
+          <i>any</i> of my projects. I am utterly defeated. Seeking revenge, I
+          enrolled at University so I could be assigned a new IP address and log
+          on to Khan Academy... and if they dare to ban my account now... they
+          subsequently ban the entire University.
           <Heading fontSize="xl" className="about-header">
             Why the password?
           </Heading>
