@@ -66,16 +66,19 @@ const Comments = ({ isOpen, onOpen, onClose, postId, postBody }) => {
   const commentAuthorRef = React.useRef();
   const [loaded, setLoaded] = React.useState(false);
   const [comments, setComments] = React.useState([]);
+  const [sortedBy, setSortedBy] = React.useState("old");
 
   const onTabChange = (index) => {
     let sortActions = {
-      new: (a, b) => new Date(a.date) - new Date(b.date),
-      old: (a, b) => new Date(b.date) - new Date(a.date),
+      new: (a, b) => new Date(b.date) - new Date(a.date),
+      old: (a, b) => new Date(a.date) - new Date(b.date),
       sentiment: (a, b) =>
-        a.meta.sentimentComparative - b.meta.sentimentComparative,
+        b.meta.sentimentComparative - a.meta.sentimentComparative,
     };
-    let indexToAction = ["new", "old", "sentiment"];
-    let thisSortAction = sortActions[indexToAction[index]];
+    let indexToAction = ["old", "new", "sentiment"];
+    let sortBy = indexToAction[index];
+    setSortedBy(sortBy);
+    let thisSortAction = sortActions[sortBy];
 
     console.log(comments);
 
@@ -100,6 +103,13 @@ const Comments = ({ isOpen, onOpen, onClose, postId, postBody }) => {
   const colormap = useMemo(() =>
     interpolate(["red", "rgb(230,230,230)", "lime"])
   );
+  const formatSentiment = (sentiment) => {
+    return sentiment === 0
+      ? "Neutral"
+      : Math.abs(sentiment).toFixed(2) * 100 +
+          "% " +
+          (sentiment > 0 ? "Positive" : "Negative");
+  };
 
   const displayMaxChars = 66;
 
@@ -117,17 +127,17 @@ const Comments = ({ isOpen, onOpen, onClose, postId, postBody }) => {
           <DrawerHeader pb={0}>Comments</DrawerHeader>
 
           <DrawerBody>
-            <Text mb={3}>
+            <Text>
               "
               {postBody.length > displayMaxChars
                 ? postBody.slice(0, displayMaxChars - 3) + "..."
                 : postBody}
               "
             </Text>
-            <Tabs isFitted onChange={onTabChange}>
+            <Tabs mb={2} isFitted onChange={onTabChange}>
               <TabList>
-                <Tab>Newest</Tab>
                 <Tab>Oldest</Tab>
+                <Tab>Newest</Tab>
                 <Tab>Sentiment</Tab>
               </TabList>
             </Tabs>
@@ -140,15 +150,28 @@ const Comments = ({ isOpen, onOpen, onClose, postId, postBody }) => {
                   mb={2}
                   fontSize="14px"
                   bgColor={
-                    c.meta.sentimentComparative === 0
-                      ? "orange"
+                    sortedBy !== "sentiment"
+                      ? "#FFC300"
                       : colormap((c.meta.sentimentComparative + 1) / 2)
                   }
                   borderRadius="6px"
                   p={2}
                 >
+                  {sortedBy === "sentiment" && (
+                    <Text
+                      float="right"
+                      fontSize="xs"
+                      color="black"
+                      fontWeight="bold"
+                      textDecorationLine="underline"
+                      p={0.5}
+                    >
+                      {formatSentiment(c.meta.sentimentComparative)}
+                    </Text>
+                  )}
                   <Text>{c.body}</Text>
-                  <Text>
+
+                  <Text mt={1} fontFamily="Garamond">
                     -{c.author} ({moment(c.date).calendar()})
                   </Text>
                 </Box>
