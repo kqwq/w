@@ -30,7 +30,7 @@ export default async function handler(req, res) {
         json.ip = getIp(req);
         const comment = await Comment.create(json);
         await BlogPost.findOneAndUpdate(
-          { postId: json.postId },
+          { _id: json.postId },
           { $inc: { "meta.comments": 1 } }
         );
         res.status(201).json({ success: true, data: comment });
