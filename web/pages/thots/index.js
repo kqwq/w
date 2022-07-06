@@ -3,13 +3,17 @@ import {
   Container,
   Divider,
   Heading,
+  Icon,
   Spacer,
   Text,
+  Tooltip,
 } from "@chakra-ui/react";
 import ReactMarkdown from "react-markdown";
 
 import React, { useState, useEffect } from "react";
 import PasswordProtected from "../../components/PasswordProtected";
+import moment from "moment";
+import { GoComment } from "react-icons/go";
 
 const ThotsPage = () => {
   const failToFetch = () => {};
@@ -60,7 +64,7 @@ const ThotsPage = () => {
           pb={10}
         >
           <Spacer pb={8} />
-          <Heading fontSize="5xl" color="lavender">
+          <Heading fontSize="4xl" color="lavender">
             <Text
               as="a"
               style={
@@ -75,7 +79,8 @@ const ThotsPage = () => {
               onClick={() => setSubPage("thots")}
             >
               Thots
-            </Text>{" "}
+            </Text>
+            &nbsp;&nbsp;
             <Text
               as="a"
               style={
@@ -100,10 +105,21 @@ const ThotsPage = () => {
                 <Text fontWeight="bold" color="rgba(255,255,255,0.4)">
                   {post.title}
                 </Text>
-                <Text>
+                <Box>
                   <ReactMarkdown>{post.body}</ReactMarkdown>
+                </Box>
+                <Box float="left" cursor="pointer" p={1.5}>
+                  <Icon as={GoComment} boxSize={6} />
+                  <Text ml={2} as="span">
+                    0
+                  </Text>
+                </Box>
+
+                <Text textAlign="right">
+                  <Tooltip label={moment(post.date).calendar()}>
+                    {moment(post.date).fromNow()}
+                  </Tooltip>
                 </Text>
-                <Text textAlign="right">{post.date}</Text>
                 <Divider pt={3} mb={10} />
               </Box>
             ))}
