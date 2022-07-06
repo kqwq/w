@@ -81,8 +81,13 @@ const ThotsPage = () => {
         <Box
           borderRadius="0 0 8px 8px"
           mb={10}
-          ml={4}
-          mr={4}
+          // ml="4 !important"
+          // mr="4 !important"
+          margin={{
+            base: "0 12px",
+            lg: "0 auto;",
+          }}
+          maxW="4xl"
           padding={8}
           bgImage={`linear-gradient(
           45deg,
@@ -133,18 +138,20 @@ const ThotsPage = () => {
             >
               About
             </Text>
-            <Box float="right">
-              <Icon
-                boxSize={10}
-                ml={5}
-                as={MdOutlineRefresh}
-                cursor="pointer"
-                onClick={() => {
-                  console.log("hi");
-                  fetchThots();
-                }}
-              />
-            </Box>
+            <Tooltip label="refresh">
+              <Text float="right">
+                <Icon
+                  boxSize={10}
+                  ml={5}
+                  as={MdOutlineRefresh}
+                  cursor="pointer"
+                  onClick={() => {
+                    console.log("hi");
+                    fetchThots();
+                  }}
+                />
+              </Text>
+            </Tooltip>
           </Heading>
           <Spacer pb={10} />
 
