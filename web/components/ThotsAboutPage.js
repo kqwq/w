@@ -76,17 +76,18 @@ const ThotsAboutPage = () => {
             Why the password?
           </Heading>
           I'm less likely to get in trouble for posting PDF links to college
-          textbooks. And do I really want my future employer reading this?
+          textbooks. Also it's fun.
           <Heading fontSize="xl" className="about-header">
             Comment Guidelines
           </Heading>
-          Even though comments are anonymous, this site doesn't allow you to
-          willingly harm other users or myself.
           <Box as="ol" pl={10}>
-            <li>Don't be a jerk</li>
-            <li>Don't impersonate other users</li>
-            <li>Don't hack this site without permission</li>
+            <li>Don't</li>
+            <li>be</li>
+            <li>a</li>
+            <li>thot</li>
           </Box>
+          Also don't hack this site without permission. If you impersonate
+          someone else I will ban you.
           <Heading fontSize="xl" className="about-header">
             Contact
           </Heading>
