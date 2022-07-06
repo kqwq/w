@@ -9,6 +9,7 @@ import {
 import ReactMarkdown from "react-markdown";
 
 import React, { useState, useEffect } from "react";
+import PasswordProtected from "../../components/PasswordProtected";
 
 const ThotsPage = () => {
   const failToFetch = () => {};
@@ -26,12 +27,12 @@ const ThotsPage = () => {
   };
 
   useEffect(() => {
-    fetchThots();
+    // fetchThots();
     document.body.style.backgroundColor = "#3c4099";
-    console.log("background", document.getElementById("bg-box").style);
   }, []);
 
   const [subPage, setSubPage] = useState("thots");
+  const [hidden, setHidden] = useState(true);
 
   let [posts, setPosts] = useState([]);
 
@@ -106,6 +107,9 @@ const ThotsPage = () => {
                 <Divider pt={3} mb={10} />
               </Box>
             ))}
+
+          {hidden && <Box color="lavender"></Box>}
+          <PasswordProtected initOpen={true} handleUnlock={fetchThots} />
 
           {subPage === "about" && (
             <>

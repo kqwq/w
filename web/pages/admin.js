@@ -12,10 +12,14 @@ import {
   Link,
   Button,
   FormLabel,
+  HStack,
+  Spacer,
 } from "@chakra-ui/react";
 import React, { useRef, useState } from "react";
-import NavBar from "../../components/NavBar";
+import NavBar from "../components/NavBar";
 import NextLink from "next/link";
+import { validateContentPassword } from "../lib/contentPassword";
+import crypto from "crypto";
 
 const AdminPage = () => {
   const destinationRef = useRef();
@@ -23,6 +27,8 @@ const AdminPage = () => {
   const titleRef = useRef();
   const bodyRef = useRef();
   const tagsRef = useRef();
+  const contentPassRef = useRef();
+  const adminPassRef = useRef();
 
   const val = (ref) => {
     return ref.current.value;
@@ -49,17 +55,32 @@ const AdminPage = () => {
       },
     };
 
-    await fetch("./api/blog_post", {
+    let isValid = await validateContentPassword(val(contentPassRef));
+    if (!isValid) {
+      alert("Something went wrong");
+      return;
+    }
+
+    let hashed = crypto
+      .createHash("sha256")
+      .update("kqwq_website_salt_" + val(adminPassRef))
+      .digest("hex");
+
+    console.log("hashed: " + hashed);
+
+    let res = await fetch("./api/blog_post", {
       method: "POST",
       body: JSON.stringify(blogPost),
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
+        "X-adminpass": hashed,
       },
     });
 
-    alert("success!");
-    console.log(blogPost);
+    console.log(res);
+    alert(res.ok ? "success!" : "error");
+    if (!res.ok) return;
 
     clearVal(titleRef);
     clearVal(bodyRef);
@@ -69,7 +90,7 @@ const AdminPage = () => {
   return (
     <>
       <NavBar />
-      <Box pt="40px">AdminPage</Box>
+      <Spacer pt={16}></Spacer>
       <Container>
         <Heading>New blog post</Heading>
         <Stack spacing={4}>
@@ -119,9 +140,23 @@ const AdminPage = () => {
               placeholder="add tags (comma separated) e.g. javascript,meta,web"
             />
           </InputGroup>
-          <Button colorScheme="blue" onClick={onSubmitBlogPost}>
-            Submit
-          </Button>
+          <HStack>
+            <Input
+              ref={contentPassRef}
+              variant="flushed"
+              placeholder="Content password"
+              type="password"
+            ></Input>
+            <Input
+              ref={adminPassRef}
+              variant="flushed"
+              placeholder="Admin password"
+              type="password"
+            ></Input>
+            <Button w={48} colorScheme="blue" onClick={onSubmitBlogPost}>
+              Submit
+            </Button>
+          </HStack>
         </Stack>
 
         <Heading mt={10}>Live stats</Heading>

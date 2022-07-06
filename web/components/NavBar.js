@@ -23,6 +23,7 @@ const NavBar = () => {
         hsl(0deg 38% 10%) 100%
         )`}
       color="white"
+      zIndex={2}
     >
       <NextLink href={"/"} passHref>
         <Link>Home</Link>

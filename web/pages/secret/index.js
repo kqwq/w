@@ -14,7 +14,7 @@ import NextLink from "next/link";
 const SecretPage = () => {
   const secretPages = [
     {
-      url: "/secret/thots",
+      url: "/thots",
       name: "Thoughts",
     },
     {
