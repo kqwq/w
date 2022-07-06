@@ -2,18 +2,22 @@ import {
   Box,
   Container,
   Divider,
+  Flex,
   Heading,
+  HStack,
   Icon,
   Spacer,
   Text,
   Tooltip,
+  useDisclosure,
 } from "@chakra-ui/react";
 import ReactMarkdown from "react-markdown";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import PasswordProtected from "../../components/PasswordProtected";
 import moment from "moment";
-import { GoComment } from "react-icons/go";
+import { IoHeart, IoHeartDislikeOutline } from "react-icons/io5";
+import Comments from "../../components/CommentsSidebar";
 
 const ThotsPage = () => {
   const failToFetch = () => {};
@@ -29,19 +33,38 @@ const ThotsPage = () => {
     setPosts(out);
     console.log(json);
   };
+  const openComments = (id) => {
+    setPostId(id);
+    setPostBody(posts.find((post) => post._id === id).body);
+    onCommentsOpen();
+  };
 
   useEffect(() => {
     // fetchThots();
     document.body.style.backgroundColor = "#3c4099";
   }, []);
 
+  const {
+    isOpen: isCommentsOpen,
+    onOpen: onCommentsOpen,
+    onClose: onCommentsClose,
+  } = useDisclosure();
   const [subPage, setSubPage] = useState("thots");
   const [hidden, setHidden] = useState(true);
 
   let [posts, setPosts] = useState([]);
+  const [postId, setPostId] = useState("");
+  const [postBody, setPostBody] = useState("");
 
   return (
     <>
+      <Comments
+        isOpen={isCommentsOpen}
+        onOpen={onCommentsOpen}
+        onClose={onCommentsClose}
+        postId={postId}
+        postBody={postBody}
+      />
       <Box bgColor="#3c4099" id="bg-box">
         <Box
           ml={4}
@@ -105,27 +128,41 @@ const ThotsPage = () => {
                 <Text fontWeight="bold" color="rgba(255,255,255,0.4)">
                   {post.title}
                 </Text>
-                <Box>
+                <Box mb={1.5}>
                   <ReactMarkdown>{post.body}</ReactMarkdown>
                 </Box>
-                <Box float="left" cursor="pointer" p={1.5}>
-                  <Icon as={GoComment} boxSize={6} />
-                  <Text ml={2} as="span">
-                    0
-                  </Text>
-                </Box>
+                <HStack
+                  className="hearts"
+                  float="left"
+                  cursor="pointer"
+                  spacing={3}
+                  onClick={() => openComments(post._id)}
+                >
+                  {post.meta?.comments > 0 ? (
+                    <>
+                      <Icon as={IoHeart} boxSize={5} />
+                      <Box as="span" fontSize="14px">
+                        <Text as="span">3</Text>
+                        {" - "}
+                        <Text as="span">1</Text>
+                      </Box>
+                      <Icon as={IoHeartDislikeOutline} boxSize={5} />
+                    </>
+                  ) : (
+                    <Text fontSize="14px">Comment</Text>
+                  )}
+                </HStack>
 
                 <Text textAlign="right">
                   <Tooltip label={moment(post.date).calendar()}>
                     {moment(post.date).fromNow()}
                   </Tooltip>
                 </Text>
-                <Divider pt={3} mb={10} />
+                <Divider pt={2} mb={10} />
               </Box>
             ))}
 
           {hidden && <Box color="lavender"></Box>}
-          <PasswordProtected initOpen={true} handleUnlock={fetchThots} />
 
           {subPage === "about" && (
             <>
@@ -140,6 +177,8 @@ const ThotsPage = () => {
           )}
         </Box>
       </Box>
+
+      <PasswordProtected initOpen={true} handleUnlock={fetchThots} />
     </>
   );
 };

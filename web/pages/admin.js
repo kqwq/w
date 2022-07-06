@@ -52,6 +52,7 @@ const AdminPage = () => {
       meta: {
         votes: 0,
         views: 0,
+        comments: 0,
       },
     };
 

@@ -14,3 +14,11 @@ a:hover {
 * {
   box-sizing: border-box;
 }
+
+
+.hearts {
+  color: rgba(255, 255, 255, 0.15) !important;
+}
+.hearts:hover {
+  color: rgba(255, 255, 255, 0.75) !important;
+}

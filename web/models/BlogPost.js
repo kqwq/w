@@ -6,13 +6,13 @@ const blogSchema = new mongoose.Schema({
   title: String,
   body: String,
   tags: [String],
-  comments: [{ body: String, date: Date, author: String, ip: String }],
   date: { type: Date, default: Date.now },
   isPublic: Boolean,
   isThot: Boolean,
   meta: {
     votes: Number,
     views: Number,
+    comments: Number,
   },
 });
 

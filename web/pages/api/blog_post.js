@@ -12,8 +12,8 @@ export default async function handler(req, res) {
   switch (method) {
     case "GET":
       try {
-        const users = await BlogPost.find({}).sort("-date");
-        res.status(200).json({ success: true, data: users });
+        const posts = await BlogPost.find({}).sort("-date").limit(100);
+        res.status(200).json({ success: true, data: posts });
       } catch (error) {
         res.status(400).json({ success: false });
       }
