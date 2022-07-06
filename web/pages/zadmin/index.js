@@ -19,6 +19,7 @@ import NextLink from "next/link";
 
 const AdminPage = () => {
   const destinationRef = useRef();
+  const [destValue, setDestValue] = React.useState("none");
   const titleRef = useRef();
   const bodyRef = useRef();
   const tagsRef = useRef();
@@ -40,8 +41,8 @@ const AdminPage = () => {
         .map((tag) => tag.trim()),
       comments: [],
       date: new Date(),
-      isPublic: val(destinationRef) === "blogs",
-      isThot: val(destinationRef) === "thots",
+      isPublic: destValue === "blogs",
+      isThot: destValue === "thots",
       meta: {
         votes: 0,
         views: 0,
@@ -63,7 +64,6 @@ const AdminPage = () => {
     clearVal(titleRef);
     clearVal(bodyRef);
     clearVal(tagsRef);
-    clearVal(destinationRef, "none");
   };
 
   return (
@@ -73,20 +73,29 @@ const AdminPage = () => {
       <Container>
         <Heading>New blog post</Heading>
         <Stack spacing={4}>
-          <FormLabel mt={5} for="radio-in">
+          <FormLabel mt={5} htmlFor="radio-in">
             Post to...
           </FormLabel>
           <RadioGroup
             id="radio-in"
-            defaultValue={"none"}
+            value={destValue}
+            onChange={setDestValue}
             ref={destinationRef}
             mb={6}
           >
             <Stack direction="row" spacing={5}>
-              <Radio value="none">none</Radio>
-              <Radio value="blogs">blogs</Radio>
-              <Radio value="thots">thots</Radio>
-              <Radio value="twitter">twitter (external)</Radio>
+              <Radio value="none" className="dest-item">
+                none
+              </Radio>
+              <Radio value="blogs" className="dest-item">
+                blogs
+              </Radio>
+              <Radio value="thots" className="dest-item">
+                thots
+              </Radio>
+              <Radio value="twitter" className="dest-item">
+                twitter (external)
+              </Radio>
             </Stack>
           </RadioGroup>
           <Link href="https://stackedit.io/app#" target="_blank">
