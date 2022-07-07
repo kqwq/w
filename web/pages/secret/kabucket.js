@@ -15,6 +15,7 @@ import {
   Icon,
   Tooltip,
   Flex,
+  Link,
 } from "@chakra-ui/react";
 import React, { useRef, useState, useEffect } from "react";
 import { IoInformation, IoInformationCircleOutline } from "react-icons/io5";
@@ -27,6 +28,7 @@ const KABucketPage = () => {
   const fileRef = useRef();
   const usernameRef = useRef();
   const passwordRef = useRef();
+  const [progressPercent, setProgressPercent] = useState(0);
   const [buckets, setBuckets] = useState([]);
 
   const beginWrite = async () => {
@@ -61,6 +63,7 @@ const KABucketPage = () => {
       socket.on("a user connected", () => {
         console.log("a user connected");
         isSocketConnected = true;
+        setProgressPercent(0.5);
         document.getElementById("write-msg").textContent =
           "Connected to server";
       });
@@ -75,7 +78,7 @@ const KABucketPage = () => {
         let { msg, percent } = progress;
         document.getElementById("write-msg").textContent = msg;
         document.getElementById("write-percent").textContent = percent;
-        document.getElementById("write-progress").value = Number(percent);
+        setProgressPercent(Number(percent));
       });
     });
 
@@ -148,8 +151,8 @@ const KABucketPage = () => {
                   placeholder="Username"
                 ></Input>
                 <Input
+                  type="password"
                   ref={passwordRef}
-                  type="text"
                   placeholder="Password"
                 ></Input>
               </HStack>
@@ -184,7 +187,7 @@ const KABucketPage = () => {
               hasStripe
               colorScheme="whatsapp"
               size="xs"
-              value={0}
+              value={progressPercent}
               min={0}
               max={100}
             />
@@ -195,25 +198,33 @@ const KABucketPage = () => {
             <Flex>
               {buckets.map((buck) => {
                 return (
-                  <Box m={2} p={2} key={buck._id} border="black dashed 2px">
-                    <Text>{buck.filename}</Text>
-                    <Text>
+                  <Box
+                    m={2}
+                    p={2}
+                    w="200px"
+                    key={buck._id}
+                    border="black dashed 2px"
+                  >
+                    <Text>{buck.filename.slice(0, 40)}</Text>
+                    <details>
+                      <summary>Source(s)</summary>
                       {buck.programIds.map((id) => {
                         return (
                           <span key={id}>
-                            <a
+                            <Link
+                              color="blue"
                               target="_blank"
                               href={
                                 "https://www.khanacademy.org/cs/bucket/" + id
                               }
                             >
                               {id}
-                            </a>
+                            </Link>
                             <br />
                           </span>
                         );
                       })}
-                    </Text>
+                    </details>
                     <Text>{moment(buck.date).calendar()}</Text>
                     <Text>{buck?.contentsLength}</Text>
                     <Button>Download</Button>

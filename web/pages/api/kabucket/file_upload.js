@@ -120,11 +120,12 @@ export default async (req, res) => {
     // Create the program(s)
     let percentWithChunks;
     let programIdList = [];
+    let lastProgramId = "";
     for (let i = 0; i < chunks.length; i++) {
       // Create program on KA
       percentWithChunks = i / chunks.length;
       socket.emit("update", {
-        msg: `Creating program...`,
+        msg: `Creating program ${lastProgramId}...`,
         percent: 10 + percentWithChunks * 80, // progress from 10% to 90%
       });
       let programRes = await createProgram(kaas, chunks[i], "::New program");
@@ -132,26 +133,22 @@ export default async (req, res) => {
         throw new Error("Error creating program: " + programRes.message);
       }
       let programJson = await programRes.json();
+      lastProgramId = programJson.id;
       programIdList.push(programJson.id);
       console.log(programJson.id);
 
       // Update mongodb bucket metadata
       percentWithChunks = (i + 0.5) / chunks.length;
       socket.emit("update", {
-        msg: `Creating program ${programJson.id}... (metadata)`,
+        msg: `Creating program ${lastProgramId}...`,
         percent: 10 + percentWithChunks * 80,
       });
+
+      console.log("OK push", programJson.id);
       await KABucket.findOneAndUpdate(
         { _id: myBucket._id },
-        { $push: { programIds: programJson.id } },
-        function (error, success) {
-          if (error) {
-            console.log(error);
-          } else {
-            console.log(success);
-          }
-        }
-      ).clone();
+        { $push: { programIds: programJson.id } }
+      );
     }
 
     // Set mongodb bucket complete field to true
