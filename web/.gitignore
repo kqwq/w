@@ -30,3 +30,6 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# for debugging file uploads
+/uploads_debug

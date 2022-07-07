@@ -20,7 +20,8 @@ export default async function handler(req, res) {
             return;
           }
         }
-        const posts = await BlogPost.find({ postId: pid })
+        const posts = await BlogPost.find({ postId: pid }, { ip: 0 })
+
           .sort("date")
           .limit(100);
         res.status(200).json({ success: true, data: posts });
