@@ -167,7 +167,6 @@ export default async (req, res) => {
     if (!res.headersSent) {
       res.status(500).json({ success: false, error: e });
     }
-
     console.error(e);
   }
 };

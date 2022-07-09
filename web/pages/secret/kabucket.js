@@ -53,7 +53,7 @@ const KABucketPage = () => {
   let socket;
   let isSocketConnected = false;
   useEffect(() => {
-    fetch("/api/kabucket/socketio").finally(() => {
+    fetch("/api/socketio").finally(() => {
       socket = io();
 
       socket.on("connect", () => {

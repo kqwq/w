@@ -24,21 +24,6 @@ const withHeader = (kaas) => {
   };
 };
 
-// { "title": "bbbbb",
-// "translatedTitle": "bbbbb",
-// "category": null,
-// "difficulty": null,
-// "tags": [],
-// "userAuthoredContentType": "pjs",
-// "topicId":
-// "xffde7c31",
-// "revision":
-// { "code": "asdfsdaf",
-// "editor_type":
-// "ace_pjs", "
-// folds": [],
-// "image_url": "data:image/png;base64,/+/==", "config_version": 4, "topic_slug": "computer-programming" } }
-
 async function createProgram(
   kaas,
   code,
@@ -67,4 +52,9 @@ async function createProgram(
   return res;
 }
 
-export { login, createProgram };
+async function getProgram(id) {
+  let res = await fetch(`${baseUrl}/scratchpads/${id}`);
+  return tes;
+}
+
+export { login, createProgram, getProgram };

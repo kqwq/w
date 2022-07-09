@@ -10,6 +10,8 @@ const bucketSchema = new mongoose.Schema({
   agentType: String,
   date: { type: Date, default: Date.now },
   contentsLength: Number,
+  bytes: Number,
+  description: String,
 });
 
 export default mongoose.models.KABucket ||
