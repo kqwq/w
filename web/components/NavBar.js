@@ -1,14 +1,17 @@
-import { Box, Flex, Link } from "@chakra-ui/react";
+import { Box, Flex, Link, Icon, FormHelperText } from "@chakra-ui/react";
 import React from "react";
 import NextLink from "next/link";
+import { IoReturnUpBackOutline } from "react-icons/io5";
 
-const NavBar = () => {
+const NavBar = ({ showBackToMainSite = false }) => {
   return (
     <Flex
-      pos="fixed"
+      pos={showBackToMainSite ? "inline" : "fixed"}
       width="100%"
       height="30px"
       p="5px"
+      pl="15px"
+      pr="15px"
       justifyContent="space-between"
       alignItems="center"
       bgImage={`linear-gradient(
@@ -25,12 +28,36 @@ const NavBar = () => {
       color="white"
       zIndex={2}
     >
-      <NextLink href={"/"} passHref>
-        <Link>Home</Link>
-      </NextLink>
-      <NextLink href={"/"} passHref>
-        <Link>meta</Link>
-      </NextLink>
+      {showBackToMainSite ? (
+        <>
+          <NextLink href={"/"} passHref>
+            <Flex>
+              <Icon
+                as={IoReturnUpBackOutline}
+                boxSize={5}
+                mr={2}
+                color="gray"
+              />
+              <Link color="gray">Back to main site</Link>
+            </Flex>
+          </NextLink>
+        </>
+      ) : (
+        <>
+          <NextLink href={"/"} passHref>
+            <Link color="orange.500">Home</Link>
+          </NextLink>
+          <NextLink href={"/projects"} passHref>
+            <Link color="green.500">Projects</Link>
+          </NextLink>
+          <NextLink href={"/blog"} passHref>
+            <Link color="blue.500">Blog</Link>
+          </NextLink>
+          <NextLink href={"/"} passHref>
+            <Link color="pink.500">Meta</Link>
+          </NextLink>
+        </>
+      )}
     </Flex>
   );
 };

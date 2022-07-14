@@ -18,10 +18,11 @@ import {
   Divider,
 } from "@chakra-ui/react";
 import React, { useRef, useState } from "react";
-import NavBar from "../components/NavBar";
+import NavBar from "../../components/NavBar";
 import NextLink from "next/link";
-import { validateContentPassword } from "../lib/contentPassword";
+import { validateContentPassword } from "../../lib/contentPassword";
 import crypto from "crypto";
+import Head from "next/head";
 
 const AdminPage = () => {
   const destinationRef = useRef();
@@ -42,6 +43,12 @@ const AdminPage = () => {
   };
 
   const onSubmitBlogPost = async () => {
+    if (destValue === "none") {
+      let isOk = confirm("Are you sure you want to submit to 'none'?");
+      if (!isOk) {
+        return;
+      }
+    }
     let blogPost = {
       title: val(titleRef),
       body: val(bodyRef),
@@ -115,6 +122,9 @@ const AdminPage = () => {
 
   return (
     <>
+      <Head>
+        <title>New Thots Post</title>
+      </Head>
       <NavBar />
       <Spacer pt={16}></Spacer>
       <Container>

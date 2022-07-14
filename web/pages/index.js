@@ -44,13 +44,13 @@ export default function Home() {
           color="brown"
         >
           <Text color="black" fontSize="72px">
-            Kyle .
+            Kyle Wells
           </Text>
         </Flex>
       </Box>
 
       <Box pos="absolute" bottom="0" left="0" right="0" overflow="hidden">
-        <Sketch />
+        {/* <Sketch /> */}
       </Box>
 
       <Flex

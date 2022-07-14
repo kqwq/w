@@ -23,12 +23,13 @@ import {
 import ReactMarkdown from "react-markdown";
 
 import React, { useState, useEffect, useRef } from "react";
-import PasswordProtected from "../components/PasswordProtected";
+import PasswordProtected from "../../components/PasswordProtected";
 import moment from "moment";
 import { IoHeart, IoHeartDislikeOutline } from "react-icons/io5";
 import { MdOutlineRefresh } from "react-icons/md";
-import Comments from "../components/ThotsComments";
-import ThotsAboutPage from "../components/ThotsAboutPage";
+import Comments from "../../components/ThotsComments";
+import ThotsAboutPage from "../../components/ThotsAboutPage";
+import NavBar from "../../components/NavBar";
 
 const ThotsPage = () => {
   const failToFetch = () => {};
@@ -70,6 +71,7 @@ const ThotsPage = () => {
 
   return (
     <>
+      <NavBar showBackToMainSite={true} />
       <Comments
         isOpen={isCommentsOpen}
         onOpen={onCommentsOpen}
