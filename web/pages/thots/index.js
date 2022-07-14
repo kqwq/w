@@ -45,10 +45,12 @@ const ThotsPage = () => {
     let json = await res.json();
     setPosts([...json.data]);
   };
-  const fetchRecentThots = async () => {
+  const fetchRecentThots = async (overridePw) => {
     setPosts([]);
     let res = await fetch(
-      `../api/blog_post?sort=recent&isThot=true&content_pw=${content_pw}`
+      `../api/blog_post?sort=recent&isThot=true&content_pw=${
+        overridePw || content_pw
+      }`
     );
     if (!res.ok) return failToFetch(res);
     let json = await res.json();
@@ -149,28 +151,32 @@ const ThotsPage = () => {
             >
               About
             </Text>
-            <Tooltip label="refresh recent">
-              <Text float="right">
-                <Icon
-                  boxSize={10}
-                  ml={5}
-                  as={MdOutlineRefresh}
-                  cursor="pointer"
-                  onClick={fetchRecentThots}
-                />
-              </Text>
-            </Tooltip>
-            <Tooltip label="random">
-              <Text float="right">
-                <Icon
-                  boxSize={10}
-                  ml={5}
-                  as={IoDiceOutline}
-                  cursor="pointer"
-                  onClick={fetchRandomThots}
-                />
-              </Text>
-            </Tooltip>
+            {subPage === "thots" && (
+              <>
+                <Tooltip label="refresh recent">
+                  <Text float="right">
+                    <Icon
+                      boxSize={10}
+                      ml={5}
+                      as={MdOutlineRefresh}
+                      cursor="pointer"
+                      onClick={fetchRecentThots}
+                    />
+                  </Text>
+                </Tooltip>
+                <Tooltip label="random">
+                  <Text float="right">
+                    <Icon
+                      boxSize={10}
+                      ml={5}
+                      as={IoDiceOutline}
+                      cursor="pointer"
+                      onClick={fetchRandomThots}
+                    />
+                  </Text>
+                </Tooltip>
+              </>
+            )}
           </Heading>
           <Text fontSize="sm" color="orange.400">
             Last 10 thoughts shown | all opinions are solely my own
@@ -235,9 +241,9 @@ const ThotsPage = () => {
       <PasswordProtected
         initOpen={true}
         handleUnlock={(pw) => {
-          setLoaded(true);
           setContent_pw(pw);
-          fetchRecentThots();
+          setLoaded(true);
+          fetchRecentThots(pw);
         }}
       />
     </>

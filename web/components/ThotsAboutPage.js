@@ -10,6 +10,7 @@ import {
   HStack,
   Icon,
   Input,
+  Link,
   Select,
   SelectField,
   Spacer,
@@ -58,6 +59,18 @@ const ThotsAboutPage = () => {
   const contactTypeRef = useRef();
   const contactNameRef = useRef();
 
+  const SmallerAndSmallerText = ({ txt, startSize, endSize }) => {
+    return txt.split("").map((char, i) => (
+      <span
+        style={{
+          fontSize: startSize + ((endSize - startSize) * i) / txt.length + "px",
+        }}
+      >
+        {char}
+      </span>
+    ));
+  };
+
   return (
     <>
       <Box color="lavender">
@@ -65,42 +78,58 @@ const ThotsAboutPage = () => {
           Hola!
         </Heading>
         <Box>
-          This is a personal blog where I talk about anything. It's pretty much
-          a parody of Matthias's{" "}
-          <a href="https://thoughts.learnerpages.com/" target="_blank">
-            Thoughts
-          </a>{" "}
-          page, but without the{" "}
-          <Box
-            as="span"
-            color="#53929B"
-            bgColor="#2E2A39"
-            fontFamily="Helvetica, Arial, sans-serif"
+          This is a microblog site where I talk about anything. Literally
+          anything. Unethical programmer hacks to boring linguistic facts. I'll
+          avoid political topics as honestly it's talked about way too often
+          already. This idea came directly from Matthias's{" "}
+          <Link
+            color="teal"
+            href="https://thoughts.learnerpages.com/"
+            target="_blank"
           >
-            8:46 p.m. Jun 13, 2022, UTC-10
-          </Box>{" "}
-          ultra-precise timezone-sensitive nonsense. Big inspiration came from
-          Matthias's page and it's totally not like I just copied his page
-          layout and changed the colors.
+            Thoughts
+          </Link>{" "}
+          webpage (subdomain?)
           <Spacer mt={3} />
-          <Box display="none">
-            Here I will tell you about myself as a programmer. I am a web,
-            fullstack, mobile, and game developer who works with client-side
-            code, especially JavaScript and Dart. More than half of my smaller
-            projects were deleted after I installed Raspian on a flash drive
-            containing all my old projects. I then got IP banned from Khan
-            Academy for creating a functional dating app. This meant I could no
-            longer create and share <i>any</i> of my projects. I was utterly
-            defeated. Seeking revenge, I enrolled at University so I could be
-            assigned a new IP address and log on to Khan Academy... and if they
-            dare to ban my account now... they subsequently ban the entire
+          <Box>
+            Here I'll introduce myself. I'm a software developer who creates
+            mobile apps, websites, automation scripts,{" "}
+            <SmallerAndSmallerText
+              txt={
+                "the metaverse, blockchain technology, NFTs, cutting-edge You copy & pasted this."
+              }
+              startSize={16}
+              endSize={1}
+            />
+          </Box>
+          <Spacer mt={3} />
+          <Box>
+            Ok but these buzzwords 🤔🤔🤔. How the f am I supposed to implement{" "}
+            <b style={{ fontStyle: "italic" }}>blockchain technologies</b> on a
+            simple chat app? Imagine someone deletes an old message... the
+            entire log of chat messages becomes invalid. This is like,,, not
+            cool along with mostW other tech buzzwords. Metaverse? VR meetings
+            and games. NFTs? Expensive receipts. Edge computing? I moved my
+            server closer to your ISP. Buzzwords are ultimately for investors,
+            not developers.
+          </Box>
+          <Spacer mt={3} />
+          <Box>
+            As some of you guys know I've been IP banned from the #1 HIT GAME
+            Khan Academy dot org for creating a functional dating app. This
+            meant I could no longer create and share <i>any</i> of my projects
+            (rest of my projects were erased on a flash drive but that's another
+            story). I did what any sensible person would do and decided to
+            enrolled at University away from home. This move assigns my computer
+            a new IP address so I can log into Khan Academy undetected... and if
+            they dare to ban my account now... they subsequently ban the entire
             University.
           </Box>
           <Heading fontSize="xl" className="about-header">
             Why the password?
           </Heading>
           I'm less likely to get in trouble for posting PDF links to college
-          textbooks. Also it's fun.
+          textbooks. And why not :o
           <Heading fontSize="xl" className="about-header">
             Comment Guidelines
           </Heading>
@@ -116,7 +145,7 @@ const ThotsAboutPage = () => {
             Contact
           </Heading>
           Feel free to message me on Discord <Code>kqwq#6389</Code> or send me a
-          message below:
+          short message below:
           <Stack spacing={3} mt={3} maxW="md">
             <Textarea
               placeholder="feedback / questions / concerns"
