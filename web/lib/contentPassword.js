@@ -10,7 +10,7 @@ async function validateContentPassword(attemptPassword) {
   let a = hash;
   let b = process.env.NEXT_PUBLIC_CONTENT_PASSWORD_HASH;
   // console.log(a, b, a.length, b.length);
-  await sleep(Math.random() * 100); // timing attack safe
+  await sleep(Math.random() * 50); // timing attack safe
   return a === b;
 }
 

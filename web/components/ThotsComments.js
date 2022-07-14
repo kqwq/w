@@ -119,7 +119,7 @@ const Comments = ({ isOpen, onOpen, onClose, postId, postBody }) => {
       );
     return sentiment === 0
       ? "Neutral"
-      : Math.abs(sentiment).toFixed(2) * 100 +
+      : Math.abs(sentiment * 100).toFixed(0) +
           "% " +
           (sentiment > 0 ? "Positive" : "Negative");
   };

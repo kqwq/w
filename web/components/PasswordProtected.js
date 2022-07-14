@@ -28,7 +28,7 @@ const PasswordProtected = ({ initOpen, handleUnlock }) => {
   const handleGoBack = () => router.back();
 
   const passwordRef = useRef();
-  const CONTENT_PASSWORD = useEffect(() => {
+  useEffect(() => {
     if (initOpen) {
       onOpen();
     }
@@ -38,7 +38,7 @@ const PasswordProtected = ({ initOpen, handleUnlock }) => {
     let validated = await validateContentPassword(passwordRef.current.value);
     if (validated) {
       onClose();
-      handleUnlock();
+      handleUnlock(passwordRef.current.value);
     } else {
       alert("Wrong password. Ask Kyle for the password to get access.");
     }

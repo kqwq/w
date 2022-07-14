@@ -77,7 +77,7 @@ const AdminPage = () => {
       .update("kqwq_website_salt_" + val(adminPassRef))
       .digest("hex");
 
-    let res = await fetch("./api/blog_post", {
+    let res = await fetch("../api/blog_post", {
       method: "POST",
       body: JSON.stringify(blogPost),
       headers: {
@@ -102,7 +102,7 @@ const AdminPage = () => {
       .digest("hex");
 
     let res = await fetch(
-      "./api/comment/thots_contact",
+      "../api/comment/thots_contact",
 
       {
         method: "GET",

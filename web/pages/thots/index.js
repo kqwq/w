@@ -25,26 +25,34 @@ import ReactMarkdown from "react-markdown";
 import React, { useState, useEffect, useRef } from "react";
 import PasswordProtected from "../../components/PasswordProtected";
 import moment from "moment";
-import { IoHeart, IoHeartDislikeOutline } from "react-icons/io5";
+import { IoHeart, IoHeartDislikeOutline, IoDiceOutline } from "react-icons/io5";
 import { MdOutlineRefresh } from "react-icons/md";
 import Comments from "../../components/ThotsComments";
 import ThotsAboutPage from "../../components/ThotsAboutPage";
 import NavBar from "../../components/NavBar";
 
 const ThotsPage = () => {
-  const failToFetch = () => {};
-  const fetchThots = async () => {
+  const failToFetch = (res) => {
+    console.log(res);
+    alert("There was a problem fetching the data. Error code 10060");
+  };
+  const fetchRandomThots = async () => {
     setPosts([]);
-    let res = await fetch("../api/blog_post");
-    if (!res.ok) {
-      failToFetch();
-      return;
-    }
+    let res = await fetch(
+      `../api/blog_post?sort=random&isThot=true&content_pw=${content_pw}`
+    );
+    if (!res.ok) return failToFetch(res);
     let json = await res.json();
-    let d = json.data.filter((post) => post.isThot);
-    let out = [...d];
-    setPosts(out);
-    setLoaded(true);
+    setPosts([...json.data]);
+  };
+  const fetchRecentThots = async () => {
+    setPosts([]);
+    let res = await fetch(
+      `../api/blog_post?sort=recent&isThot=true&content_pw=${content_pw}`
+    );
+    if (!res.ok) return failToFetch(res);
+    let json = await res.json();
+    setPosts([...json.data]);
   };
   const openComments = (id) => {
     setPostId(id);
@@ -68,6 +76,7 @@ const ThotsPage = () => {
   let [posts, setPosts] = useState([]);
   const [postId, setPostId] = useState("");
   const [postBody, setPostBody] = useState("");
+  const [content_pw, setContent_pw] = useState("default");
 
   return (
     <>
@@ -140,17 +149,25 @@ const ThotsPage = () => {
             >
               About
             </Text>
-            <Tooltip label="refresh">
+            <Tooltip label="refresh recent">
               <Text float="right">
                 <Icon
                   boxSize={10}
                   ml={5}
                   as={MdOutlineRefresh}
                   cursor="pointer"
-                  onClick={() => {
-                    console.log("hi");
-                    fetchThots();
-                  }}
+                  onClick={fetchRecentThots}
+                />
+              </Text>
+            </Tooltip>
+            <Tooltip label="random">
+              <Text float="right">
+                <Icon
+                  boxSize={10}
+                  ml={5}
+                  as={IoDiceOutline}
+                  cursor="pointer"
+                  onClick={fetchRandomThots}
                 />
               </Text>
             </Tooltip>
@@ -215,7 +232,14 @@ const ThotsPage = () => {
         </Box>
       </Box>
 
-      <PasswordProtected initOpen={true} handleUnlock={fetchThots} />
+      <PasswordProtected
+        initOpen={true}
+        handleUnlock={(pw) => {
+          setLoaded(true);
+          setContent_pw(pw);
+          fetchRecentThots();
+        }}
+      />
     </>
   );
 };
