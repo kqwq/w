@@ -155,7 +155,10 @@ const ThotsPage = () => {
               </Text>
             </Tooltip>
           </Heading>
-          <Spacer pb={10} />
+          <Text fontSize="sm" color="orange.400">
+            Last 10 thoughts shown | all opinions are solely my own
+          </Text>
+          <Spacer pb={5} />
 
           {subPage === "thots" &&
             posts.map((post) => (

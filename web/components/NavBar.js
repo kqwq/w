@@ -53,7 +53,7 @@ const NavBar = ({ showBackToMainSite = false }) => {
           <NextLink href={"/blog"} passHref>
             <Link color="blue.500">Blog</Link>
           </NextLink>
-          <NextLink href={"/"} passHref>
+          <NextLink href={"/x/metaverse"} passHref>
             <Link color="pink.500">Meta</Link>
           </NextLink>
         </>

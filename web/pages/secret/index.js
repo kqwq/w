@@ -15,7 +15,7 @@ const SecretPage = () => {
   const secretPages = [
     {
       url: "/thots",
-      name: "Thoughts",
+      name: "Thoughts by Kyle",
     },
     {
       url: "/secret/kabucket",
@@ -28,10 +28,10 @@ const SecretPage = () => {
       <NavBar />
       <Container>
         <Spacer pt={16} />
-        <Heading>Secret</Heading>
+        <Heading>Secret directories</Heading>
         <Spacer pt={10} />
 
-        <Box>dirs</Box>
+        <Box>Some or all of these pages require an access code.</Box>
 
         <UnorderedList>
           {secretPages.map((secretPage) => (
