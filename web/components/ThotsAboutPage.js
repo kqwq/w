@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import {
   Box,
   Button,
@@ -58,6 +58,7 @@ const ThotsAboutPage = () => {
   const contactBodyRef = useRef();
   const contactTypeRef = useRef();
   const contactNameRef = useRef();
+  const [showFace, setShowFace] = useState(false);
 
   const SmallerAndSmallerText = ({ txt, startSize, endSize }) => {
     return txt.split("").map((char, i) => (
@@ -78,10 +79,7 @@ const ThotsAboutPage = () => {
           Hola!
         </Heading>
         <Box>
-          This is a microblog site where I talk about anything. Literally
-          anything. Unethical programmer hacks to boring linguistic facts. I'll
-          avoid political topics as honestly it's talked about way too often
-          already. This idea came directly from Matthias's{" "}
+          Personal thoughts. Inspired from Matthias's{" "}
           <Link
             color="teal"
             href="https://thoughts.learnerpages.com/"
@@ -92,44 +90,54 @@ const ThotsAboutPage = () => {
           webpage (subdomain?)
           <Spacer mt={3} />
           <Box>
-            Here I'll introduce myself. I'm a software developer who creates
-            mobile apps, websites, automation scripts,{" "}
             <SmallerAndSmallerText
-              txt={
-                "the metaverse, blockchain technology, NFTs, cutting-edge You copy & pasted this."
-              }
+              txt={"Weeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee..."}
+              startSize={16}
+              endSize={1}
+            />
+            . My reaction to that information:
+            😐😐😐😐😐😐😐😐😐😐😐😐😐😐😐😐😐.
+            <br />
+            Hey, you need to focus and stop messing around.{" "}
+            <SmallerAndSmallerText
+              txt={"Noooooooooooooooooooooo..."}
               startSize={16}
               endSize={1}
             />
           </Box>
           <Spacer mt={3} />
-          <Box>
-            Ok but these buzzwords 🤔🤔🤔. How the f am I supposed to implement{" "}
-            <b style={{ fontStyle: "italic" }}>blockchain technologies</b> on a
-            simple chat app? Imagine someone deletes an old message... the
-            entire log of chat messages becomes invalid. This is like,,, not
-            cool along with mostW other tech buzzwords. Metaverse? VR meetings
-            and games. NFTs? Expensive receipts. Edge computing? I moved my
-            server closer to your ISP. Buzzwords are ultimately for investors,
-            not developers.
+          <Box display="none">
+            Here I'll introduce myself. I'm a software developer who creates
+            mobile apps, websites, automation scripts,
+            {
+              "the actual metaverse, blockchain technology, NFTs, IoT, C8H10N4O2"
+            }
+            || Ok but these buzzwords 🤔🤔🤔. How the f am I supposed to
+            implement{" "}
+            <b style={{ fontStyle: "italic" }}>blockchain technology</b> on a
+            simple chat app for instance? Imagine someone deletes an old
+            message... the entire log of chat messages becomes invalid. This is
+            like,,, not cool along with most other tech buzzwords. Here, I will
+            un-buzzword-ify the following terms. Metaverse? VR meetings and
+            games. NFTs? Expensive receipts. Edge computing? A server close to
+            an ISP near you. Buzzwords are ultimately for investors, not
+            developers.|| As some of you guys know I've been IP banned from the
+            #1 HIT GAME Khan Academy dot org slash computing for creating a
+            working dating app. This meant I could no longer create and share{" "}
+            <i>any</i> of my projects (rest of my projects were erased on a
+            flash drive but that's another story). I did what any sensible
+            person would do and decided to enrolled at University away from
+            home. I did this to assign my computer a brand new IP address. Now I
+            can log into Khan Academy undetected... and if they dare to ban my
+            account now... they subsequently ban the entire University.
           </Box>
           <Spacer mt={3} />
-          <Box>
-            As some of you guys know I've been IP banned from the #1 HIT GAME
-            Khan Academy dot org for creating a functional dating app. This
-            meant I could no longer create and share <i>any</i> of my projects
-            (rest of my projects were erased on a flash drive but that's another
-            story). I did what any sensible person would do and decided to
-            enrolled at University away from home. This move assigns my computer
-            a new IP address so I can log into Khan Academy undetected... and if
-            they dare to ban my account now... they subsequently ban the entire
-            University.
-          </Box>
+          <Box></Box>
           <Heading fontSize="xl" className="about-header">
             Why the password?
           </Heading>
           I'm less likely to get in trouble for posting PDF links to college
-          textbooks. And why not :o
+          textbooks. And why not lol
           <Heading fontSize="xl" className="about-header">
             Comment Guidelines
           </Heading>
@@ -167,8 +175,22 @@ const ThotsAboutPage = () => {
                 Submit
               </Button>
             </HStack>
-            <small>postId: thots_contact</small>
           </Stack>
+          <Flex justify="space-between" mt={2}>
+            <small>
+              postId: thot
+              <Link cursor="pointer" onClick={() => setShowFace(true)}>
+                s_c
+              </Link>
+              ontact
+            </small>
+            <Link
+              href="https://www.youtube.com/watch?v=_nH0xv_oCiw"
+              display={showFace ? "block" : "none"}
+            >
+              s_c
+            </Link>
+          </Flex>
         </Box>
       </Box>
     </>

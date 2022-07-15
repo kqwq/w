@@ -73,10 +73,7 @@ const ThotsPage = () => {
   const [postId, setPostId] = useState("");
   const [postBody, setPostBody] = useState("");
   const [content_pw, setContent_pw] = useState("default");
-
-  useEffect(() => {
-    document.body.style.backgroundColor = "#3c4099";
-  }, []);
+  const [solely, setSolely] = useState(true);
 
   useEffect(() => {
     if (content_pw !== "default") fetchRecentThots();
@@ -92,10 +89,9 @@ const ThotsPage = () => {
         postId={postId}
         postBody={postBody}
       />
-      <Box bgColor="#3c4099" id="bg-box">
+      <Box bgColor="#3c4099" id="bg-box" minH="100vh" pb={5}>
         <Box
           borderRadius="0 0 8px 8px"
-          mb={10}
           // ml="4 !important"
           // mr="4 !important"
           margin={{
@@ -118,7 +114,6 @@ const ThotsPage = () => {
           hsl(301deg 61% 11%) 90%,
           hsl(315deg 82% 11%) 100%
 )`}
-          pb={10}
         >
           <Spacer pb={8} />
           <Heading fontSize="4xl" color="lavender">
@@ -181,7 +176,14 @@ const ThotsPage = () => {
             )}
           </Heading>
           <Text fontSize="sm" color="orange.400">
-            Last 10 thoughts shown | all opinions are solely my own
+            Last 10 thoughts shown | all opinions are{" "}
+            <Box
+              as="span"
+              onMouseOut={() => setSolely(true)}
+              onMouseOver={() => setSolely(false)}
+            >
+              {solely ? "solely my own" : "shared by every human on earth"}
+            </Box>
           </Text>
           <Spacer pb={5} />
 
@@ -243,7 +245,6 @@ const ThotsPage = () => {
       <PasswordProtected
         initOpen={true}
         handleUnlock={(pw) => {
-          console.log("GOTTTT", pw);
           setContent_pw(pw); // this triggers useEffect which triggers fetchRecentThots
           setLoaded(true);
         }}
