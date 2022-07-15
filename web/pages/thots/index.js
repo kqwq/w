@@ -45,12 +45,10 @@ const ThotsPage = () => {
     let json = await res.json();
     setPosts([...json.data]);
   };
-  const fetchRecentThots = async (overridePw) => {
+  const fetchRecentThots = async () => {
     setPosts([]);
     let res = await fetch(
-      `../api/blog_post?sort=recent&isThot=true&content_pw=${
-        overridePw || content_pw
-      }`
+      `../api/blog_post?sort=recent&isThot=true&content_pw=${content_pw}`
     );
     if (!res.ok) return failToFetch(res);
     let json = await res.json();
@@ -62,11 +60,6 @@ const ThotsPage = () => {
     onCommentsOpen();
   };
 
-  useEffect(() => {
-    // fetchThots();
-    document.body.style.backgroundColor = "#3c4099";
-  }, []);
-
   const {
     isOpen: isCommentsOpen,
     onOpen: onCommentsOpen,
@@ -74,11 +67,20 @@ const ThotsPage = () => {
   } = useDisclosure();
   const [subPage, setSubPage] = useState("thots");
   const [loaded, setLoaded] = useState(false);
+  const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   let [posts, setPosts] = useState([]);
   const [postId, setPostId] = useState("");
   const [postBody, setPostBody] = useState("");
   const [content_pw, setContent_pw] = useState("default");
+
+  useEffect(() => {
+    document.body.style.backgroundColor = "#3c4099";
+  }, []);
+
+  useEffect(() => {
+    if (content_pw !== "default") fetchRecentThots();
+  }, [content_pw]);
 
   return (
     <>
@@ -241,9 +243,9 @@ const ThotsPage = () => {
       <PasswordProtected
         initOpen={true}
         handleUnlock={(pw) => {
-          setContent_pw(pw);
+          console.log("GOTTTT", pw);
+          setContent_pw(pw); // this triggers useEffect which triggers fetchRecentThots
           setLoaded(true);
-          fetchRecentThots(pw);
         }}
       />
     </>

@@ -15,7 +15,6 @@ export default async function handler(req, res) {
       try {
         const validated = await validateContentPassword(req.query.content_pw);
         if (validated) {
-          console.log(req.query.content_pw);
           let aggregateList = [
             {
               $match: { isThot: req.query.isThot === "true" },
