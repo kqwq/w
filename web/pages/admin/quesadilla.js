@@ -42,29 +42,55 @@ const AdminPage = () => {
     ref.current.value = override;
   };
 
-  const onSubmitBlogPost = async () => {
+  const onSubmitPost = async () => {
+    let postBody;
     if (destValue === "none") {
       let isOk = confirm("Are you sure you want to submit to 'none'?");
       if (!isOk) {
         return;
       }
-    }
-    let blogPost = {
-      title: val(titleRef),
-      body: val(bodyRef),
-      tags: val(tagsRef)
+    } else if (destValue === "twitter") {
+      let intentTxt = `${val(titleRef)}\n${val(bodyRef)}\n${val(tagsRef)
         .split(",")
-        .map((tag) => tag.trim()),
-      comments: [],
-      date: new Date(),
-      isPublic: destValue === "blogs",
-      isThot: destValue === "thots",
-      meta: {
-        votes: 0,
-        views: 0,
-        comments: 0,
-      },
-    };
+        .map((tag) => "#" + tag.trim())
+        .join(" ")}`;
+      window.open(
+        "https://twitter.com/intent/tweet?text=" + encodeURIComponent(intentTxt)
+      );
+      return;
+    } else if (destValue === "unsolved") {
+      postBody = {
+        problemNumber: val(titleRef).match(/^[^\d]*(\d+)/)?.[1] || -1,
+        title: val(titleRef),
+        body: val(bodyRef),
+        tags: val(tagsRef)
+          .split(",")
+          .map((tag) => tag.trim()),
+        date: new Date(),
+        meta: {
+          votes: 0,
+          views: 0,
+          comments: 0,
+        },
+      };
+    } else if (destValue === "blogs" || destValue === "thots") {
+      postBody = {
+        title: val(titleRef),
+        body: val(bodyRef),
+        tags: val(tagsRef)
+          .split(",")
+          .map((tag) => tag.trim()),
+        comments: [],
+        date: new Date(),
+        isPublic: destValue === "blogs",
+        isThot: destValue === "thots",
+        meta: {
+          votes: 0,
+          views: 0,
+          comments: 0,
+        },
+      };
+    }
 
     let isValid = await validateContentPassword(val(contentPassRef));
     if (!isValid) {
@@ -77,9 +103,10 @@ const AdminPage = () => {
       .update("kqwq_website_salt_" + val(adminPassRef))
       .digest("hex");
 
-    let res = await fetch("../api/blog_post", {
+    let fetchUrl = destValue === "unsolved" ? "unsolved" : "blog_post";
+    let res = await fetch("../api/" + fetchUrl, {
       method: "POST",
-      body: JSON.stringify(blogPost),
+      body: JSON.stringify(postBody),
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -162,7 +189,7 @@ const AdminPage = () => {
             ref={destinationRef}
             mb={6}
           >
-            <Stack direction="row" spacing={5}>
+            <Stack direction="row" spacing={2}>
               <Radio value="none" className="dest-item">
                 none
               </Radio>
@@ -173,7 +200,7 @@ const AdminPage = () => {
                 thots
               </Radio>
               <Radio value="twitter" className="dest-item">
-                twitter
+                twitter (no passwd)
               </Radio>
               <Radio value="unsolved" className="dest-item">
                 unsolved problem
@@ -214,7 +241,7 @@ const AdminPage = () => {
               placeholder="Admin password"
               type="password"
             ></Input>
-            <Button w={48} colorScheme="blue" onClick={onSubmitBlogPost}>
+            <Button w={48} colorScheme="blue" onClick={onSubmitPost}>
               Submit
             </Button>
             <Button w={96} colorScheme="purple" onClick={onLoadFeedback}>

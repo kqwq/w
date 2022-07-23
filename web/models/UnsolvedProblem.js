@@ -3,7 +3,7 @@
 import mongoose from "mongoose";
 
 const unsolvedProblemSchema = new mongoose.Schema({
-  index: {
+  problemNumber: {
     type: Number,
     default: -1,
   },
@@ -15,8 +15,6 @@ const unsolvedProblemSchema = new mongoose.Schema({
     votes: Number,
     views: Number,
     comments: Number,
-    positiveComments: Number,
-    negativeComments: Number,
   },
   isSolved: {
     type: Boolean,
