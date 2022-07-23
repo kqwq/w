@@ -5,6 +5,7 @@ import {
   ListItem,
   Spacer,
   UnorderedList,
+  Text,
   Link,
 } from "@chakra-ui/react";
 import React from "react";
@@ -22,6 +23,16 @@ const SecretPage = () => {
       name: "KA Bucket",
     },
   ];
+  const adminPages = [
+    {
+      url: "/thots/new",
+      name: "Post new thought / blogpost",
+    },
+    {
+      url: "/projects/new",
+      name: "Post new project",
+    },
+  ];
 
   return (
     <>
@@ -31,13 +42,27 @@ const SecretPage = () => {
         <Heading>Secret directories</Heading>
         <Spacer pt={10} />
 
-        <Box>Some or all of these pages require an access code.</Box>
-
+        <Heading size="md">Secret</Heading>
+        <Text fontStyle={"italic"}>
+          Some or all of these pages require an access code.
+        </Text>
         <UnorderedList>
           {secretPages.map((secretPage) => (
             <ListItem key={secretPage.url}>
               <NextLink href={secretPage.url} passHref>
                 <Link>{secretPage.name}</Link>
+              </NextLink>
+            </ListItem>
+          ))}
+        </UnorderedList>
+
+        <Spacer pt={8} />
+        <Heading size="md">Admin only</Heading>
+        <UnorderedList>
+          {adminPages.map((adminPage) => (
+            <ListItem key={adminPage.url}>
+              <NextLink href={adminPage.url} passHref>
+                <Link>{adminPage.name}</Link>
               </NextLink>
             </ListItem>
           ))}

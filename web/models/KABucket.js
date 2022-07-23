@@ -11,6 +11,7 @@ const bucketSchema = new mongoose.Schema({
   date: { type: Date, default: Date.now },
   contentsLength: Number,
   bytes: Number,
+  contentsLength: Number,
   description: String,
 });
 
