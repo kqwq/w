@@ -5,7 +5,7 @@ const RedirectPage = () => {
   const router = useRouter();
 
   useEffect(() => {
-    router.push("./thots/new");
+    router.push("./admin/quesadilla");
   }, []);
 
   return <div>redirecting...</div>;

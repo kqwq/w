@@ -128,7 +128,29 @@ const AdminPage = () => {
       <NavBar />
       <Spacer pt={16}></Spacer>
       <Container>
-        <Heading>New blog post</Heading>
+        <Heading
+          size="3xl"
+          bgClip="text"
+          bgGradient={`
+          linear-gradient(
+            45deg,
+            hsl(96deg 40% 66%) 0%,
+            hsl(132deg 41% 66%) 11%,
+            hsl(157deg 51% 58%) 22%,
+            hsl(173deg 68% 47%) 33%,
+            hsl(181deg 100% 39%) 44%,
+            hsl(188deg 100% 43%) 56%,
+            hsl(193deg 100% 46%) 67%,
+            hsl(197deg 100% 49%) 78%,
+            hsl(205deg 98% 58%) 89%,
+            hsl(221deg 92% 70%) 100%
+          );`}
+        >
+          quesadilla
+        </Heading>
+        <Heading mt={4} size="lg">
+          New post
+        </Heading>
         <Stack spacing={4}>
           <FormLabel mt={5} htmlFor="radio-in">
             Post to...
@@ -151,7 +173,10 @@ const AdminPage = () => {
                 thots
               </Radio>
               <Radio value="twitter" className="dest-item">
-                twitter (external)
+                twitter
+              </Radio>
+              <Radio value="unsolved" className="dest-item">
+                unsolved problem
               </Radio>
             </Stack>
           </RadioGroup>
@@ -209,9 +234,13 @@ const AdminPage = () => {
           })}
         </Stack>
 
-        <Heading mt={10}>Live stats</Heading>
+        <Heading size="lg" mt={10}>
+          Live stats
+        </Heading>
 
-        <Heading mt={10}>Accumulative stats</Heading>
+        <Heading size="lg" mt={10}>
+          Accumulative stats
+        </Heading>
       </Container>
     </>
   );

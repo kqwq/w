@@ -25,8 +25,8 @@ const SecretPage = () => {
   ];
   const adminPages = [
     {
-      url: "/thots/new",
-      name: "Post new thought / blogpost",
+      url: "https://www.youtube.com/watch?v=aYsgsSo1aow",
+      name: "Admin page (full control panel)",
     },
     {
       url: "/projects/new",

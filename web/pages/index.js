@@ -43,7 +43,13 @@ export default function Home() {
           h="100vh"
           color="brown"
         >
-          <Text color="black" fontSize="72px">
+          <Text
+            fontWeight="extrabold"
+            fontSize="6xl"
+            color="black"
+            bgGradient="linear(to-l, #7928CA, #FF0080)"
+            bgClip="text"
+          >
             Kyle Wells
           </Text>
         </Flex>
