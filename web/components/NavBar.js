@@ -1,33 +1,35 @@
 import { Box, Flex, Link, Icon, FormHelperText } from "@chakra-ui/react";
-import React from "react";
+import React, { useState } from "react";
 import NextLink from "next/link";
 import { IoReturnUpBackOutline } from "react-icons/io5";
+import { NavBarSketch } from "./NarBarSketch";
+import { Sketch } from "./Sketch";
 
 const NavBar = ({ showBackToMainSite = false }) => {
   return (
     <Flex
       pos={showBackToMainSite ? "inline" : "fixed"}
       width="100%"
-      height="30px"
+      height="50px"
       p="5px"
       pl="15px"
       pr="15px"
       justifyContent="space-between"
       alignItems="center"
-      bgImage={`linear-gradient(
-        70deg,
-        hsl(0deg 0% 0%) 0%,
-        hsl(202deg 100% 3%) 14%,
-        hsl(194deg 88% 4%) 29%,
-        hsl(194deg 50% 6%) 43%,
-        hsl(203deg 38% 7%) 57%,
-        hsl(245deg 20% 9%) 71%,
-        hsl(319deg 28% 9%) 86%,
-        hsl(0deg 38% 10%) 100%
-        )`}
+      // bgImage={`linear-gradient(
+      //   70deg,
+      //   hsl(0deg 0% 0%) 0%,
+      //   hsl(202deg 100% 3%) 14%,
+      //   hsl(194deg 88% 4%) 29%,
+      //   hsl(194deg 50% 6%) 43%,
+      //   hsl(203deg 38% 7%) 57%,
+      //   hsl(245deg 20% 9%) 71%,
+      //   hsl(319deg 28% 9%) 86%,
+      //   hsl(0deg 38% 10%) 100%
+      //   )`}
       color="white"
-      zIndex={2}
     >
+      <Sketch name={"dragonCurve"} />
       {showBackToMainSite ? (
         <>
           <NextLink href={"/"} passHref>

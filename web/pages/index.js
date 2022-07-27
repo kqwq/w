@@ -55,9 +55,7 @@ export default function Home() {
         </Flex>
       </Box>
 
-      <Box pos="absolute" bottom="0" left="0" right="0" overflow="hidden">
-        {/* <Sketch /> */}
-      </Box>
+      <Sketch name="trees" />
 
       <Flex
         pos="absolute"
@@ -67,16 +65,15 @@ export default function Home() {
         color="blue"
         fontSize="2xl"
       >
-        <NextLink href={"/blog"} passHref>
-          <Link>Blog</Link>
-        </NextLink>
-
         <NextLink href={"/projects"} passHref>
-          <Link>Projects</Link>
+          <Link>projects</Link>
+        </NextLink>
+        <NextLink href={"/about"} passHref>
+          <Link>about me</Link>
         </NextLink>
 
-        <NextLink href={"/secret"} passHref>
-          <Link>???</Link>
+        <NextLink href={"/blog"} passHref>
+          <Link>blog</Link>
         </NextLink>
       </Flex>
     </>
