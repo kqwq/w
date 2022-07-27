@@ -16,20 +16,20 @@ const NavBar = ({ showBackToMainSite = false }) => {
       pr="15px"
       justifyContent="space-between"
       alignItems="center"
-      // bgImage={`linear-gradient(
-      //   70deg,
-      //   hsl(0deg 0% 0%) 0%,
-      //   hsl(202deg 100% 3%) 14%,
-      //   hsl(194deg 88% 4%) 29%,
-      //   hsl(194deg 50% 6%) 43%,
-      //   hsl(203deg 38% 7%) 57%,
-      //   hsl(245deg 20% 9%) 71%,
-      //   hsl(319deg 28% 9%) 86%,
-      //   hsl(0deg 38% 10%) 100%
-      //   )`}
+      bgImage={`linear-gradient(
+        70deg,
+        hsl(0deg 0% 0%) 0%,
+        hsl(202deg 100% 3%) 14%,
+        hsl(194deg 88% 4%) 29%,
+        hsl(194deg 50% 6%) 43%,
+        hsl(203deg 38% 7%) 57%,
+        hsl(245deg 20% 9%) 71%,
+        hsl(319deg 28% 9%) 86%,
+        hsl(0deg 38% 10%) 100%
+        )`}
       color="white"
     >
-      <Sketch name={"dragonCurve"} />
+      {/* <Sketch name={"dragonCurve"} /> */}
       {showBackToMainSite ? (
         <>
           <NextLink href={"/"} passHref>
