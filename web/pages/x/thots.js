@@ -182,7 +182,7 @@ const ThotsPage = () => {
               onMouseOut={() => setSolely(true)}
               onMouseOver={() => setSolely(false)}
             >
-              {solely ? "solely my own" : "shared by every human on earth"}
+              {solely ? "solely my own" : "shared by everyone obviously"}
             </Box>
           </Text>
           <Spacer pb={5} />
