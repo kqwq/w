@@ -165,7 +165,7 @@ export default function sketch(p) {
       if (startProgress > 50) {
         started = true;
       }
-      p.fill(0, 128 + startProgress * 2.5, 0);
+      p.fill(0, 255 - startProgress * 2.5, 0);
       p.rect(0, 48, (startProgress * p.width) / 50, 2);
     }
   };
