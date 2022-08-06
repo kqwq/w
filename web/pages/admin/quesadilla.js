@@ -20,7 +20,6 @@ import {
 import React, { useRef, useState } from "react";
 import NavBar from "../../components/NavBar";
 import NextLink from "next/link";
-import { validateContentPassword } from "../../lib/contentPassword";
 import crypto from "crypto";
 import Head from "next/head";
 
@@ -30,7 +29,6 @@ const AdminPage = () => {
   const titleRef = useRef();
   const bodyRef = useRef();
   const tagsRef = useRef();
-  const contentPassRef = useRef();
   const adminPassRef = useRef();
   const [feedback, setFeedback] = useState([]);
 
@@ -66,7 +64,6 @@ const AdminPage = () => {
         tags: val(tagsRef)
           .split(",")
           .map((tag) => tag.trim()),
-        date: new Date(),
         meta: {
           votes: 0,
           views: 0,
@@ -90,12 +87,6 @@ const AdminPage = () => {
           comments: 0,
         },
       };
-    }
-
-    let isValid = await validateContentPassword(val(contentPassRef));
-    if (!isValid) {
-      alert("Something went wrong");
-      return;
     }
 
     let hashed = crypto
@@ -229,12 +220,6 @@ const AdminPage = () => {
             />
           </InputGroup>
           <HStack>
-            <Input
-              ref={contentPassRef}
-              variant="flushed"
-              placeholder="Content password"
-              type="password"
-            ></Input>
             <Input
               ref={adminPassRef}
               variant="flushed"

@@ -11,6 +11,7 @@ const unsolvedProblemSchema = new mongoose.Schema({
   body: String,
   tags: [String],
   date: { type: Date, default: Date.now },
+  lastEdited: { type: Date, default: Date.now },
   meta: {
     votes: Number,
     views: Number,
