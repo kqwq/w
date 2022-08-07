@@ -54,12 +54,10 @@ export default function Home() {
           </Text>
         </Flex>
       </Box>
-
-      <Sketch name="trees" />
-
+      =
       <Flex
         pos="absolute"
-        top="60vh"
+        bottom="5vh"
         width="100%"
         justifyContent="space-around"
         color="blue"
