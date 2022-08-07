@@ -33,3 +33,6 @@ yarn-error.log*
 
 # for debugging file uploads
 /uploads_debug
+
+# test folder
+/test
