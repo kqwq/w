@@ -46,7 +46,7 @@ const Comments = ({ isOpen, onOpen, onClose, postId, postBody }) => {
       );
     }
 
-    let res = await fetch("/api/comment", {
+    let res = await fetch("../api/comment", {
       method: "POST",
       body: JSON.stringify(newComment),
       headers: {
